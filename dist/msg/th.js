@@ -292,6 +292,8 @@ var Blockly = {}; Blockly.Msg={};  module.exports = function(){'use strict';
 /** @export */ Blockly.Msg.NEW_VARIABLE = "สร้างตัวแปร...";
 /** @export */ Blockly.Msg.NEW_VARIABLE_TITLE = "ชื่อตัวแปรใหม่:";
 /** @export */ Blockly.Msg.NEW_VARIABLE_TYPE_TITLE = "ชนิดตัวแปรใหม่";
+Blockly.Msg["NEW_VARIABLE_DROPDOWN"] = "สร้างตัวแปร ...";
+Blockly.Msg["NEW_VARIABLE_TYPE_DROPDOWN"] = "สร้างตัวแปรชนิด %1 ...";
 /** @export */ Blockly.Msg.ORDINAL_NUMBER_SUFFIX = "";  // untranslated
 /** @export */ Blockly.Msg.PROCEDURES_ALLOW_STATEMENTS = "ข้อความที่ใช้ได้";
 /** @export */ Blockly.Msg.PROCEDURES_BEFORE_PARAMS = "ด้วย:";

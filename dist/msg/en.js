@@ -294,6 +294,12 @@ var Blockly = {}; Blockly.Msg={};  module.exports = function(){// This file was 
 /** @export */ Blockly.Msg.NEW_VARIABLE = "Create variable...";
 /** @export */ Blockly.Msg.NEW_VARIABLE_TITLE = "New variable name:";
 /** @export */ Blockly.Msg.NEW_VARIABLE_TYPE_TITLE = "New variable type:";
+
+Blockly.Msg["NEW_VARIABLE_DROPDOWN"] = "New variable...";
+Blockly.Msg["NEW_VARIABLE_TITLE"] = "New variable name:";
+Blockly.Msg["NEW_VARIABLE_TYPE_DROPDOWN"] = "New %1 variable...";
+Blockly.Msg["NEW_VARIABLE_TYPE_TITLE"] = "New variable type:";
+
 /** @export */ Blockly.Msg.ORDINAL_NUMBER_SUFFIX = "";
 /** @export */ Blockly.Msg.PROCEDURES_ALLOW_STATEMENTS = "allow statements";
 /** @export */ Blockly.Msg.PROCEDURES_BEFORE_PARAMS = "with:";

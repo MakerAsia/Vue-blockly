@@ -1,6 +1,6 @@
 {
   "name": "vue-blockly",
-  "version": "1.0.35",
+  "version": "1.0.4",
   "description": "Blockly for vue",
   "main": "index.js",
   "keywords": [
@@ -9,19 +9,13 @@
     "vue.js"
   ],
   "dependencies": {
-    "jsdom": "^11.3.0",
-    "xmlshim": "^0.2.1"
+    
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "gulp": "^3.8.11",
-    "gulp-insert": "^0.5.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-replace": "^0.6.1",
-    "mocha": "^4.0.1"
+    
   },
   "scripts": {    
-    "prepublish": "rm -rf dist && mkdir dist && gulp build"
+    
   },
   "repository": {
     "type": "git",

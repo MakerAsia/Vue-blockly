@@ -1070,9 +1070,11 @@ Blockly.ConnectionDB.prototype.findConnection=function(a){if(!this.length)return
 Blockly.ConnectionDB.prototype.findPositionForConnection_=function(a){if(!this.length)return 0;for(var b=0,c=this.length;b<c;){var d=Math.floor((b+c)/2);if(this[d].y_<a.y_)b=d+1;else if(this[d].y_>a.y_)c=d;else{b=d;break}}return b};Blockly.ConnectionDB.prototype.removeConnection_=function(a){if(!a.inDB_)throw"Connection not in database.";var b=this.findConnection(a);if(-1==b)throw"Unable to find connection in connectionDB.";a.inDB_=!1;this.splice(b,1)};
 Blockly.ConnectionDB.prototype.getNeighbours=function(a,b){function c(a){var c=e-d[a].x_,g=f-d[a].y_;Math.sqrt(c*c+g*g)<=b&&l.push(d[a]);return g<b}for(var d=this,e=a.x_,f=a.y_,g=0,h=d.length-2,k=h;g<k;)d[k].y_<f?g=k:h=k,k=Math.floor((g+h)/2);var l=[];h=g=k;if(d.length){for(;0<=g&&c(g);)g--;do h++;while(h<d.length&&c(h))}return l};Blockly.ConnectionDB.prototype.isInYRange_=function(a,b,c){return Math.abs(this[a].y_-b)<=c};
 Blockly.ConnectionDB.prototype.searchForClosest=function(a,b,c){if(!this.length)return{connection:null,radius:b};var d=a.y_,e=a.x_;a.x_=e+c.x;a.y_=d+c.y;var f=this.findPositionForConnection_(a);c=null;for(var g=b,h,k=f-1;0<=k&&this.isInYRange_(k,a.y_,b);)h=this[k],a.isConnectionAllowed(h,g)&&(c=h,g=h.distanceFrom(a)),k--;for(;f<this.length&&this.isInYRange_(f,a.y_,b);)h=this[f],a.isConnectionAllowed(h,g)&&(c=h,g=h.distanceFrom(a)),f++;a.x_=e;a.y_=d;return{connection:c,radius:g}};
-Blockly.ConnectionDB.init=function(a){var b=[];b[Blockly.INPUT_VALUE]=new Blockly.ConnectionDB;b[Blockly.OUTPUT_VALUE]=new Blockly.ConnectionDB;b[Blockly.NEXT_STATEMENT]=new Blockly.ConnectionDB;b[Blockly.PREVIOUS_STATEMENT]=new Blockly.ConnectionDB;a.connectionDBList=b};Blockly.constants={};Blockly.DRAG_RADIUS=5;Blockly.FLYOUT_DRAG_RADIUS=10;Blockly.SNAP_RADIUS=20;Blockly.BUMP_DELAY=250;Blockly.COLLAPSE_CHARS=30;Blockly.LONGPRESS=750;Blockly.SOUND_LIMIT=100;Blockly.DRAG_STACK=!0;Blockly.HSV_SATURATION=.45;Blockly.HSV_VALUE=.65;Blockly.SPRITE={width:96,height:124,url:"sprites.png"};Blockly.SVG_NS="http://www.w3.org/2000/svg";Blockly.HTML_NS="http://www.w3.org/1999/xhtml";Blockly.INPUT_VALUE=1;Blockly.OUTPUT_VALUE=2;Blockly.NEXT_STATEMENT=3;
+Blockly.ConnectionDB.init=function(a){var b=[];b[Blockly.INPUT_VALUE]=new Blockly.ConnectionDB;b[Blockly.OUTPUT_VALUE]=new Blockly.ConnectionDB;b[Blockly.NEXT_STATEMENT]=new Blockly.ConnectionDB;b[Blockly.PREVIOUS_STATEMENT]=new Blockly.ConnectionDB;a.connectionDBList=b};
+Blockly.constants={};Blockly.DRAG_RADIUS=5;Blockly.FLYOUT_DRAG_RADIUS=10;Blockly.SNAP_RADIUS=20;Blockly.BUMP_DELAY=250;Blockly.COLLAPSE_CHARS=30;Blockly.LONGPRESS=750;Blockly.SOUND_LIMIT=100;Blockly.DRAG_STACK=!0;Blockly.HSV_SATURATION=.45;Blockly.HSV_VALUE=.65;Blockly.SPRITE={width:96,height:124,url:"sprites.png"};Blockly.SVG_NS="http://www.w3.org/2000/svg";Blockly.HTML_NS="http://www.w3.org/1999/xhtml";Blockly.INPUT_VALUE=1;Blockly.OUTPUT_VALUE=2;Blockly.NEXT_STATEMENT=3;
 Blockly.PREVIOUS_STATEMENT=4;Blockly.DUMMY_INPUT=5;Blockly.ALIGN_LEFT=-1;Blockly.ALIGN_CENTRE=0;Blockly.ALIGN_RIGHT=1;Blockly.DRAG_NONE=0;Blockly.DRAG_STICKY=1;Blockly.DRAG_BEGIN=1;Blockly.DRAG_FREE=2;Blockly.OPPOSITE_TYPE=[];Blockly.OPPOSITE_TYPE[Blockly.INPUT_VALUE]=Blockly.OUTPUT_VALUE;Blockly.OPPOSITE_TYPE[Blockly.OUTPUT_VALUE]=Blockly.INPUT_VALUE;Blockly.OPPOSITE_TYPE[Blockly.NEXT_STATEMENT]=Blockly.PREVIOUS_STATEMENT;Blockly.OPPOSITE_TYPE[Blockly.PREVIOUS_STATEMENT]=Blockly.NEXT_STATEMENT;
 Blockly.TOOLBOX_AT_TOP=0;Blockly.TOOLBOX_AT_BOTTOM=1;Blockly.TOOLBOX_AT_LEFT=2;Blockly.TOOLBOX_AT_RIGHT=3;Blockly.DELETE_AREA_NONE=null;Blockly.DELETE_AREA_TRASH=1;Blockly.DELETE_AREA_TOOLBOX=2;Blockly.VARIABLE_CATEGORY_NAME="VARIABLE";Blockly.VARIABLE_DYNAMIC_CATEGORY_NAME="VARIABLE_DYNAMIC";Blockly.PROCEDURE_CATEGORY_NAME="PROCEDURE";Blockly.RENAME_VARIABLE_ID="RENAME_VARIABLE_ID";Blockly.DELETE_VARIABLE_ID="DELETE_VARIABLE_ID";Blockly.BlockAnimations={};Blockly.BlockAnimations.disconnectPid_=0;Blockly.BlockAnimations.disconnectGroup_=null;Blockly.BlockAnimations.disposeUiEffect=function(a){var b=a.workspace,c=a.getSvgRoot();b.getAudioManager().play("delete");a=b.getSvgXY(c);c=c.cloneNode(!0);c.translateX_=a.x;c.translateY_=a.y;c.setAttribute("transform","translate("+a.x+","+a.y+")");b.getParentSvg().appendChild(c);c.bBox_=c.getBBox();Blockly.BlockAnimations.disposeUiStep_(c,b.RTL,new Date,b.scale)};
+Blockly.CREATE_VARIABLE_ID = 'CREATE_VARIABLE';
 Blockly.BlockAnimations.disposeUiStep_=function(a,b,c,d){var e=(new Date-c)/150;1<e?goog.dom.removeNode(a):(a.setAttribute("transform","translate("+(a.translateX_+(b?-1:1)*a.bBox_.width*d/2*e)+","+(a.translateY_+a.bBox_.height*d*e)+") scale("+(1-e)*d+")"),setTimeout(Blockly.BlockAnimations.disposeUiStep_,10,a,b,c,d))};
 Blockly.BlockAnimations.connectionUiEffect=function(a){var b=a.workspace,c=b.scale;b.getAudioManager().play("click");if(!(1>c)){var d=b.getSvgXY(a.getSvgRoot());a.outputConnection?(d.x+=(a.RTL?3:-3)*c,d.y+=13*c):a.previousConnection&&(d.x+=(a.RTL?-23:23)*c,d.y+=3*c);a=Blockly.utils.createSvgElement("circle",{cx:d.x,cy:d.y,r:0,fill:"none",stroke:"#888","stroke-width":10},b.getParentSvg());Blockly.BlockAnimations.connectionUiStep_(a,new Date,c)}};
 Blockly.BlockAnimations.connectionUiStep_=function(a,b,c){var d=(new Date-b)/150;1<d?goog.dom.removeNode(a):(a.setAttribute("r",25*d*c),a.style.opacity=1-d,Blockly.BlockAnimations.disconnectPid_=setTimeout(Blockly.BlockAnimations.connectionUiStep_,10,a,b,c))};
@@ -1249,9 +1251,59 @@ Blockly.Variables.createVariable_=function(a,b,c,d){var e=a.getPotentialVariable
 Blockly.VariablesDynamic.flyoutCategory=function(a){var b=[],c=goog.dom.createDom("button");c.setAttribute("text",Blockly.Msg.NEW_STRING_VARIABLE);c.setAttribute("callbackKey","CREATE_VARIABLE_STRING");b.push(c);c=goog.dom.createDom("button");c.setAttribute("text",Blockly.Msg.NEW_NUMBER_VARIABLE);c.setAttribute("callbackKey","CREATE_VARIABLE_NUMBER");b.push(c);c=goog.dom.createDom("button");c.setAttribute("text",Blockly.Msg.NEW_COLOUR_VARIABLE);c.setAttribute("callbackKey","CREATE_VARIABLE_COLOUR");
 b.push(c);a.registerButtonCallback("CREATE_VARIABLE_STRING",Blockly.VariablesDynamic.onCreateVariableButtonClick_String);a.registerButtonCallback("CREATE_VARIABLE_NUMBER",Blockly.VariablesDynamic.onCreateVariableButtonClick_Number);a.registerButtonCallback("CREATE_VARIABLE_COLOUR",Blockly.VariablesDynamic.onCreateVariableButtonClick_Colour);a=Blockly.VariablesDynamic.flyoutCategoryBlocks(a);return b=b.concat(a)};
 Blockly.VariablesDynamic.flyoutCategoryBlocks=function(a){a=a.getAllVariables();a.sort(Blockly.VariableModel.compareByName);var b=[];if(0<a.length){if(Blockly.Blocks.variables_set_dynamic){var c='<xml><block type="variables_set_dynamic" gap="24">'+Blockly.Variables.generateVariableFieldXmlString(a[0])+"</block></xml>";c=Blockly.Xml.textToDom(c).firstChild;b.push(c)}if(Blockly.Blocks.variables_get_dynamic)for(var d=0;c=a[d];d++)c='<xml><block type="variables_get_dynamic" gap="8">'+Blockly.Variables.generateVariableFieldXmlString(c)+
-"</block></xml>",c=Blockly.Xml.textToDom(c).firstChild,b.push(c)}return b};Blockly.WorkspaceAudio=function(a){this.parentWorkspace_=a;this.SOUNDS_=Object.create(null)};Blockly.WorkspaceAudio.prototype.lastSound_=null;Blockly.WorkspaceAudio.prototype.dispose=function(){this.SOUNDS_=this.parentWorkspace_=null};Blockly.WorkspaceAudio.prototype.load=function(a,b){if(a.length){try{var c=new window.Audio}catch(h){return}for(var d,e=0;e<a.length;e++){var f=a[e],g=f.match(/\.(\w+)$/);if(g&&c.canPlayType("audio/"+g[1])){d=new window.Audio(f);break}}d&&d.play&&(this.SOUNDS_[b]=d)}};
-Blockly.WorkspaceAudio.prototype.preload=function(){for(var a in this.SOUNDS_){var b=this.SOUNDS_[a];b.volume=.01;b.play();b.pause();if(goog.userAgent.IPAD||goog.userAgent.IPHONE)break}};
-Blockly.WorkspaceAudio.prototype.play=function(a,b){var c=this.SOUNDS_[a];if(c){var d=new Date;null!=this.lastSound_&&d-this.lastSound_<Blockly.SOUND_LIMIT||(this.lastSound_=d,c=goog.userAgent.DOCUMENT_MODE&&9===goog.userAgent.DOCUMENT_MODE||goog.userAgent.IPAD||goog.userAgent.ANDROID?c:c.cloneNode(),c.volume=void 0===b?1:b,c.play())}else this.parentWorkspace_&&this.parentWorkspace_.getAudioManager().play(a,b)};Blockly.WorkspaceCommentSvg.render={};Blockly.WorkspaceCommentSvg.RESIZE_SIZE=8;Blockly.WorkspaceCommentSvg.BORDER_RADIUS=3;Blockly.WorkspaceCommentSvg.TEXTAREA_OFFSET=2;Blockly.WorkspaceCommentSvg.TOP_OFFSET=10;Blockly.WorkspaceCommentSvg.prototype.getHeightWidth=function(){return{width:this.getWidth(),height:this.getHeight()}};
+"</block></xml>",c=Blockly.Xml.textToDom(c).firstChild,b.push(c)}return b};
+Blockly.WorkspaceAudio = function(a) {
+    this.parentWorkspace_ = a;
+    this.SOUNDS_ = Object.create(null)
+};
+Blockly.WorkspaceAudio.prototype.lastSound_ = null;
+Blockly.WorkspaceAudio.prototype.dispose = function() {
+    this.SOUNDS_ = this.parentWorkspace_ = null
+};
+Blockly.WorkspaceAudio.prototype.load = function(a, b) {
+    if (a.length) {
+        try {
+            var c = new window.Audio
+        } catch (h) {
+            return
+        }
+        for (var d, e = 0; e < a.length; e++) {
+            var f = a[e],
+                g = f.match(/\.(\w+)$/);
+            if (g && c.canPlayType("audio/" + g[1])) {
+                d = new window.Audio(f);
+                break
+            }
+        }
+        d && d.play && (this.SOUNDS_[b] = d)
+    }
+};
+Blockly.WorkspaceAudio.prototype.preload = function() {
+    for (var a in this.SOUNDS_) {
+        var b = this.SOUNDS_[a];
+        b.volume = .01;
+        //b.play(); <<<<<< create Uncaught (in promise) DOMException: The play() request was interrupted by a call to pause().
+        //b.pause();
+        var playPromise = b.play();
+		if (playPromise !== undefined) {
+		    playPromise.then(_ => {
+		      b.pause();
+		    })
+		    .catch(error => {
+		      console.log('blockly audio preload error : ' + error);
+		    });
+		}
+        if (goog.userAgent.IPAD || goog.userAgent.IPHONE) break
+    }
+};
+Blockly.WorkspaceAudio.prototype.play = function(a, b) {
+    var c = this.SOUNDS_[a];
+    if (c) {
+        var d = new Date;
+        null != this.lastSound_ && d - this.lastSound_ < Blockly.SOUND_LIMIT || (this.lastSound_ = d, c = goog.userAgent.DOCUMENT_MODE && 9 === goog.userAgent.DOCUMENT_MODE || goog.userAgent.IPAD || goog.userAgent.ANDROID ? c : c.cloneNode(), c.volume = void 0 === b ? 1 : b, c.play())
+    } else this.parentWorkspace_ && this.parentWorkspace_.getAudioManager().play(a, b)
+};
+Blockly.WorkspaceCommentSvg.render={};Blockly.WorkspaceCommentSvg.RESIZE_SIZE=8;Blockly.WorkspaceCommentSvg.BORDER_RADIUS=3;Blockly.WorkspaceCommentSvg.TEXTAREA_OFFSET=2;Blockly.WorkspaceCommentSvg.TOP_OFFSET=10;Blockly.WorkspaceCommentSvg.prototype.getHeightWidth=function(){return{width:this.getWidth(),height:this.getHeight()}};
 Blockly.WorkspaceCommentSvg.prototype.render=function(){if(!this.rendered_){var a=this.getHeightWidth();this.createEditor_();this.svgGroup_.appendChild(this.foreignObject_);this.svgHandleTarget_=Blockly.utils.createSvgElement("rect",{"class":"blocklyCommentHandleTarget",x:0,y:0});this.svgGroup_.appendChild(this.svgHandleTarget_);this.svgRectTarget_=Blockly.utils.createSvgElement("rect",{"class":"blocklyCommentTarget",x:0,y:0,rx:Blockly.WorkspaceCommentSvg.BORDER_RADIUS,ry:Blockly.WorkspaceCommentSvg.BORDER_RADIUS});
 this.svgGroup_.appendChild(this.svgRectTarget_);this.addResizeDom_();this.isDeletable()&&this.addDeleteDom_();this.setSize_(a.width,a.height);this.textarea_.value=this.content_;this.rendered_=!0;this.resizeGroup_&&Blockly.bindEventWithChecks_(this.resizeGroup_,"mousedown",this,this.resizeMouseDown_);this.isDeletable()&&(Blockly.bindEventWithChecks_(this.deleteGroup_,"mousedown",this,this.deleteMouseDown_),Blockly.bindEventWithChecks_(this.deleteGroup_,"mouseout",this,this.deleteMouseOut_),Blockly.bindEventWithChecks_(this.deleteGroup_,
 "mouseup",this,this.deleteMouseUp_))}};
@@ -1351,8 +1403,24 @@ Blockly.WorkspaceSvg.prototype.showContextMenu_=function(a){function b(a){if(a.i
 this.undo.bind(this,!1);d.push(h);h={};h.text=Blockly.Msg.REDO;h.enabled=0<this.redoStack_.length;h.callback=this.undo.bind(this,!0);d.push(h);this.scrollbar&&(h={},h.text=Blockly.Msg.CLEAN_UP,h.enabled=1<e.length,h.callback=this.cleanUp.bind(this),d.push(h));if(this.options.collapse){for(var k=h=!1,l=0;l<e.length;l++)for(var n=e[l];n;)n.isCollapsed()?h=!0:k=!0,n=n.getNextBlock();var m=function(a){for(var b=0,c=0;c<e.length;c++)for(var d=e[c];d;)setTimeout(d.setCollapsed.bind(d,a),b),d=d.getNextBlock(),
 b+=10};k={enabled:k};k.text=Blockly.Msg.COLLAPSE_ALL;k.callback=function(){m(!0)};d.push(k);h={enabled:h};h.text=Blockly.Msg.EXPAND_ALL;h.callback=function(){m(!1)};d.push(h)}var p=[];for(l=0;l<e.length;l++)b(e[l]);h={text:1==p.length?Blockly.Msg.DELETE_BLOCK:Blockly.Msg.DELETE_X_BLOCKS.replace("%1",String(p.length)),enabled:0<p.length,callback:function(){g.currentGesture_&&g.currentGesture_.cancel();2>p.length?c():Blockly.confirm(Blockly.Msg.DELETE_ALL_BLOCKS.replace("%1",p.length),function(a){a&&
 c()})}};d.push(h);this.configureContextMenu&&this.configureContextMenu(d);Blockly.ContextMenu.show(a,d,this.RTL)}};
-Blockly.WorkspaceSvg.prototype.updateToolbox=function(a){if(a=Blockly.Options.parseToolboxTree(a)){if(!this.options.languageTree)throw"Existing toolbox is null.  Can't create new toolbox.";if(a.getElementsByTagName("category").length){if(!this.toolbox_)throw"Existing toolbox has no categories.  Can't change mode.";this.options.languageTree=a;this.toolbox_.populate_(a);this.toolbox_.addColour_();this.toolbox_.addIcon_();}else{if(!this.flyout_)throw"Existing toolbox has categories.  Can't change mode.";this.options.languageTree=
-a;this.flyout_.show(a.childNodes)}}else if(this.options.languageTree)throw"Can't nullify an existing toolbox.";};Blockly.WorkspaceSvg.prototype.markFocused=function(){this.options.parentWorkspace?this.options.parentWorkspace.markFocused():(Blockly.mainWorkspace=this,this.setBrowserFocus())};Blockly.WorkspaceSvg.prototype.setBrowserFocus=function(){document.activeElement&&document.activeElement.blur();try{this.getParentSvg().focus()}catch(a){try{this.getParentSvg().parentNode.setActive()}catch(b){this.getParentSvg().parentNode.focus()}}};
+Blockly.WorkspaceSvg.prototype.updateToolbox = function(a) {
+    if (a = Blockly.Options.parseToolboxTree(a)) {
+        if (!this.options.languageTree) throw "Existing toolbox is null.  Can't create new toolbox.";
+        if (a.getElementsByTagName("category").length) {
+            if (!this.toolbox_) throw "Existing toolbox has no categories.  Can't change mode.";
+            this.options.languageTree = a;
+            this.toolbox_.populate_(a);
+            this.toolbox_.addColour_();
+            this.toolbox_.addIcon_();
+        } else {
+            if (!this.flyout_) throw "Existing toolbox has categories.  Can't change mode.";
+            this.options.languageTree =
+                a;
+            this.flyout_.show(a.childNodes)
+        }
+    } else if (this.options.languageTree) throw "Can't nullify an existing toolbox.";
+};
+Blockly.WorkspaceSvg.prototype.markFocused=function(){this.options.parentWorkspace?this.options.parentWorkspace.markFocused():(Blockly.mainWorkspace=this,this.setBrowserFocus())};Blockly.WorkspaceSvg.prototype.setBrowserFocus=function(){document.activeElement&&document.activeElement.blur();try{this.getParentSvg().focus()}catch(a){try{this.getParentSvg().parentNode.setActive()}catch(b){this.getParentSvg().parentNode.focus()}}};
 Blockly.WorkspaceSvg.prototype.zoom=function(a,b,c){var d=this.options.zoomOptions.scaleSpeed,e=this.getMetrics(),f=this.getParentSvg().createSVGPoint();f.x=a;f.y=b;f=f.matrixTransform(this.getCanvas().getCTM().inverse());a=f.x;b=f.y;f=this.getCanvas();d=Math.pow(d,c);c=this.scale*d;c>this.options.zoomOptions.maxScale?d=this.options.zoomOptions.maxScale/this.scale:c<this.options.zoomOptions.minScale&&(d=this.options.zoomOptions.minScale/this.scale);this.scale!=c&&(this.scrollbar&&(a=f.getCTM().translate(a*
 (1-d),b*(1-d)).scale(d),this.scrollX=a.e-e.absoluteLeft,this.scrollY=a.f-e.absoluteTop),this.setScale(c))};Blockly.WorkspaceSvg.prototype.zoomCenter=function(a){var b=this.getMetrics();this.zoom(b.viewWidth/2,b.viewHeight/2,a)};
 Blockly.WorkspaceSvg.prototype.zoomToFit=function(){var a=this.getMetrics(),b=this.getBlocksBoundingBox(),c=b.width;b=b.height;if(c){var d=a.viewWidth,e=a.viewHeight;this.flyout_&&(d-=this.flyout_.width_);this.scrollbar||(c+=a.contentLeft,b+=a.contentTop);this.setScale(Math.min(d/c,e/b));this.scrollCenter()}};
@@ -1586,39 +1654,579 @@ Blockly.FieldColour.prototype.showEditor_=function(){Blockly.WidgetDiv.show(this
 e.sourceBlock_&&(a=e.callValidator(a));null!==a&&e.setValue(a)})};Blockly.FieldColour.prototype.createWidget_=function(){var a=new goog.ui.ColorPicker;a.setSize(this.columns_||Blockly.FieldColour.COLUMNS);a.setColors(this.colours_||Blockly.FieldColour.COLOURS);a.render(Blockly.WidgetDiv.DIV);a.setSelectedColor(this.getValue());return a};Blockly.FieldColour.widgetDispose_=function(){Blockly.FieldColour.changeEventKey_&&goog.events.unlistenByKey(Blockly.FieldColour.changeEventKey_);Blockly.Events.setGroup(!1)};
 Blockly.Field.register("field_colour",Blockly.FieldColour);Blockly.FieldDropdown=function(a,b){goog.isFunction(a)||Blockly.FieldDropdown.validateOptions_(a);this.menuGenerator_=a;this.trimOptions_();var c=this.getOptions()[0];Blockly.FieldDropdown.superClass_.constructor.call(this,c[1],b)};goog.inherits(Blockly.FieldDropdown,Blockly.Field);Blockly.FieldDropdown.fromJson=function(a){return new Blockly.FieldDropdown(a.options)};Blockly.FieldDropdown.CHECKMARK_OVERHANG=25;Blockly.FieldDropdown.MAX_MENU_HEIGHT_VH=.45;
 Blockly.FieldDropdown.ARROW_CHAR=goog.userAgent.ANDROID?"\u25bc":"\u25be";Blockly.FieldDropdown.prototype.CURSOR="default";Blockly.FieldDropdown.prototype.value_="";Blockly.FieldDropdown.prototype.imageElement_=null;Blockly.FieldDropdown.prototype.imageJson_=null;
-Blockly.FieldDropdown.prototype.init=function(){this.fieldGroup_||(this.arrow_=Blockly.utils.createSvgElement("tspan",{},null),this.arrow_.appendChild(document.createTextNode(this.sourceBlock_.RTL?Blockly.FieldDropdown.ARROW_CHAR+" ":" "+Blockly.FieldDropdown.ARROW_CHAR)),Blockly.FieldDropdown.superClass_.init.call(this))};Blockly.FieldDropdown.prototype.showEditor_=function(){Blockly.WidgetDiv.show(this,this.sourceBlock_.RTL,null);var a=this.createMenu_();this.addActionListener_(a);this.positionMenu_(a)};
-Blockly.FieldDropdown.prototype.addActionListener_=function(a){var b=this;goog.events.listen(a,goog.ui.Component.EventType.ACTION,function(a){if(a=a.target)b.onItemSelected(this,a);Blockly.WidgetDiv.hideIfOwner(b);Blockly.Events.setGroup(!1)})};
-Blockly.FieldDropdown.prototype.createMenu_=function(){var a=new goog.ui.Menu;a.setRightToLeft(this.sourceBlock_.RTL);for(var b=this.getOptions(),c=0;c<b.length;c++){var d=b[c][0],e=b[c][1];if("object"==typeof d){var f=new Image(d.width,d.height);f.src=d.src;f.alt=d.alt||"";d=f}d=new goog.ui.MenuItem(d);d.setRightToLeft(this.sourceBlock_.RTL);d.setValue(e);d.setCheckable(!0);a.addChild(d,!0);d.setChecked(e==this.value_)}return a};
-Blockly.FieldDropdown.prototype.positionMenu_=function(a){var b=Blockly.utils.getViewportBBox(),c=this.getAnchorDimensions_();this.createWidget_(a);var d=Blockly.utils.uiMenu.getSize(a),e=Blockly.FieldDropdown.MAX_MENU_HEIGHT_VH*document.documentElement.clientHeight;d.height>e&&(d.height=e);this.sourceBlock_.RTL&&Blockly.utils.uiMenu.adjustBBoxesForRTL(b,c,d);Blockly.WidgetDiv.positionWithAnchor(b,c,d,this.sourceBlock_.RTL);a.getElement().focus()};
-Blockly.FieldDropdown.prototype.createWidget_=function(a){a.render(Blockly.WidgetDiv.DIV);Blockly.utils.addClass(a.getElement(),"blocklyDropdownMenu");a.setAllowAutoFocus(!0)};Blockly.FieldDropdown.prototype.getAnchorDimensions_=function(){var a=this.getScaledBBox_();this.sourceBlock_.RTL?a.right+=Blockly.FieldDropdown.CHECKMARK_OVERHANG:a.left-=Blockly.FieldDropdown.CHECKMARK_OVERHANG;return a};
-Blockly.FieldDropdown.prototype.onItemSelected=function(a,b){var c=b.getValue();this.sourceBlock_&&(c=this.callValidator(c));null!==c&&this.setValue(c)};
-Blockly.FieldDropdown.prototype.trimOptions_=function(){this.suffixField=this.prefixField=null;var a=this.menuGenerator_;if(goog.isArray(a)){for(var b=!1,c=0;c<a.length;c++){var d=a[c][0];"string"==typeof d?a[c][0]=Blockly.utils.replaceMessageReferences(d):(null!=d.alt&&(a[c][0].alt=Blockly.utils.replaceMessageReferences(d.alt)),b=!0)}if(!(b||2>a.length)){b=[];for(c=0;c<a.length;c++)b.push(a[c][0]);c=Blockly.utils.shortestStringLength(b);d=Blockly.utils.commonWordPrefix(b,c);var e=Blockly.utils.commonWordSuffix(b,
-c);!d&&!e||c<=d+e||(d&&(this.prefixField=b[0].substring(0,d-1)),e&&(this.suffixField=b[0].substr(1-e)),this.menuGenerator_=Blockly.FieldDropdown.applyTrim_(a,d,e))}}};Blockly.FieldDropdown.applyTrim_=function(a,b,c){for(var d=[],e=0;e<a.length;e++){var f=a[e][0],g=a[e][1];f=f.substring(b,f.length-c);d[e]=[f,g]}return d};Blockly.FieldDropdown.prototype.isOptionListDynamic=function(){return goog.isFunction(this.menuGenerator_)};
-Blockly.FieldDropdown.prototype.getOptions=function(){if(goog.isFunction(this.menuGenerator_)){var a=this.menuGenerator_.call(this);Blockly.FieldDropdown.validateOptions_(a);return a}return this.menuGenerator_};Blockly.FieldDropdown.prototype.getValue=function(){return this.value_};
-Blockly.FieldDropdown.prototype.setValue=function(a){if(null!==a&&a!==this.value_){this.sourceBlock_&&Blockly.Events.isEnabled()&&Blockly.Events.fire(new Blockly.Events.BlockChange(this.sourceBlock_,"field",this.name,this.value_,a));this.value_=a;for(var b=this.getOptions(),c=0;c<b.length;c++)if(b[c][1]==a){a=b[c][0];"object"==typeof a?(this.imageJson_=a,this.text_=a.alt):(this.imageJson_=null,this.text_=a);this.forceRerender();return}this.text_=a;this.forceRerender()}};
-Blockly.FieldDropdown.prototype.render_=function(){this.visible_?(this.sourceBlock_&&this.arrow_&&(this.arrow_.style.fill=this.sourceBlock_.getColour()),goog.dom.removeChildren(this.textElement_),goog.dom.removeNode(this.imageElement_),this.imageElement_=null,this.imageJson_?this.renderSelectedImage_():this.renderSelectedText_(),this.borderRect_.setAttribute("height",this.size_.height-9),this.borderRect_.setAttribute("width",this.size_.width+Blockly.BlockSvg.SEP_SPACE_X)):this.size_.width=0};
-Blockly.FieldDropdown.prototype.renderSelectedImage_=function(){this.imageElement_=Blockly.utils.createSvgElement("image",{y:5,height:this.imageJson_.height+"px",width:this.imageJson_.width+"px"},this.fieldGroup_);this.imageElement_.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href",this.imageJson_.src);this.textElement_.appendChild(this.arrow_);var a=Blockly.Field.getCachedWidth(this.arrow_);this.size_.height=Number(this.imageJson_.height)+19;this.size_.width=Number(this.imageJson_.width)+
-a;this.sourceBlock_.RTL?(this.imageElement_.setAttribute("x",a),this.textElement_.setAttribute("x",-1)):(this.textElement_.setAttribute("text-anchor","end"),this.textElement_.setAttribute("x",this.size_.width+1))};
-Blockly.FieldDropdown.prototype.renderSelectedText_=function(){var a=document.createTextNode(this.getDisplayText_());this.textElement_.appendChild(a);this.sourceBlock_.RTL?this.textElement_.insertBefore(this.arrow_,this.textElement_.firstChild):this.textElement_.appendChild(this.arrow_);this.textElement_.setAttribute("text-anchor","start");this.textElement_.setAttribute("x",0);this.size_.height=Blockly.BlockSvg.MIN_BLOCK_Y;this.size_.width=Blockly.Field.getCachedWidth(this.textElement_)};
-Blockly.FieldDropdown.prototype.updateWidth=function(){if(this.imageJson_&&(goog.userAgent.IE||goog.userAgent.EDGE)){var a=Blockly.Field.getCachedWidth(this.arrow_);a=Number(this.imageJson_.width)+a+Blockly.BlockSvg.SEP_SPACE_X;this.borderRect_&&this.borderRect_.setAttribute("width",a);this.size_.width=a}else Blockly.Field.prototype.updateWidth.call(this)};Blockly.FieldDropdown.prototype.dispose=function(){Blockly.WidgetDiv.hideIfOwner(this);Blockly.FieldDropdown.superClass_.dispose.call(this)};
-Blockly.FieldDropdown.validateOptions_=function(a){if(!goog.isArray(a))throw"FieldDropdown options must be an array.";for(var b=!1,c=0;c<a.length;++c){var d=a[c];goog.isArray(a)?goog.isString(d[1])?goog.isString(d[0])||goog.isString(d[0].src)||(b=!0,console.error("Invalid option["+c+"]: Each FieldDropdown option must have a string label or image description. Found"+d[0]+" in: ",d)):(b=!0,console.error("Invalid option["+c+"]: Each FieldDropdown option id must be a string. Found "+d[1]+" in: ",d)):
-(b=!0,console.error("Invalid option["+c+"]: Each FieldDropdown option must be an array. Found: ",d))}if(b)throw"Found invalid FieldDropdown options.";};Blockly.Field.register("field_dropdown",Blockly.FieldDropdown);Blockly.FieldImage=function(a,b,c,d,e,f){this.sourceBlock_=null;this.height_=Number(c);this.width_=Number(b);this.size_=new goog.math.Size(this.width_,this.height_+2*Blockly.BlockSvg.INLINE_PADDING_Y);this.text_=d||"";this.setValue(a);"function"==typeof e&&(this.clickHandler_=e);this.clickImage_=!1;"undefined"!=typeof f&&(this.clickImage_=f)};goog.inherits(Blockly.FieldImage,Blockly.Field);
+Blockly.FieldDropdown.prototype.init = function() {
+    this.fieldGroup_ || (this.arrow_ = Blockly.utils.createSvgElement("tspan", {}, null), this.arrow_.appendChild(document.createTextNode(this.sourceBlock_.RTL ? Blockly.FieldDropdown.ARROW_CHAR + " " : " " + Blockly.FieldDropdown.ARROW_CHAR)), Blockly.FieldDropdown.superClass_.init.call(this))
+};
+Blockly.FieldDropdown.prototype.showEditor_ = function() {
+    Blockly.WidgetDiv.show(this, this.sourceBlock_.RTL, null);
+    var a = this.createMenu_();
+    this.addActionListener_(a);
+    this.positionMenu_(a)
+};
+Blockly.FieldDropdown.prototype.addActionListener_ = function(a) {
+    var b = this;
+    goog.events.listen(a, goog.ui.Component.EventType.ACTION, function(a) {
+        if (a = a.target) b.onItemSelected(this, a);
+        Blockly.WidgetDiv.hideIfOwner(b);
+        Blockly.Events.setGroup(!1)
+    })
+};
+Blockly.FieldDropdown.prototype.createMenu_ = function() {
+    var a = new goog.ui.Menu;
+    a.setRightToLeft(this.sourceBlock_.RTL);
+    for (var b = this.getOptions(), c = 0; c < b.length; c++) {
+        var d = b[c][0],
+            e = b[c][1];
+        if ("object" == typeof d) {
+            var f = new Image(d.width, d.height);
+            f.src = d.src;
+            f.alt = d.alt || "";
+            d = f
+        }
+        d = new goog.ui.MenuItem(d);
+        d.setRightToLeft(this.sourceBlock_.RTL);
+        d.setValue(e);
+        d.setCheckable(!0);
+        a.addChild(d, !0);
+        d.setChecked(e == this.value_)
+    }
+    return a
+};
+Blockly.FieldDropdown.prototype.positionMenu_ = function(a) {
+    var b = Blockly.utils.getViewportBBox(),
+        c = this.getAnchorDimensions_();
+    this.createWidget_(a);
+    var d = Blockly.utils.uiMenu.getSize(a),
+        e = Blockly.FieldDropdown.MAX_MENU_HEIGHT_VH * document.documentElement.clientHeight;
+    d.height > e && (d.height = e);
+    this.sourceBlock_.RTL && Blockly.utils.uiMenu.adjustBBoxesForRTL(b, c, d);
+    Blockly.WidgetDiv.positionWithAnchor(b, c, d, this.sourceBlock_.RTL);
+    a.getElement().focus()
+};
+Blockly.FieldDropdown.prototype.createWidget_ = function(a) {
+    a.render(Blockly.WidgetDiv.DIV);
+    Blockly.utils.addClass(a.getElement(), "blocklyDropdownMenu");
+    a.setAllowAutoFocus(!0)
+};
+Blockly.FieldDropdown.prototype.getAnchorDimensions_ = function() {
+    var a = this.getScaledBBox_();
+    this.sourceBlock_.RTL ? a.right += Blockly.FieldDropdown.CHECKMARK_OVERHANG : a.left -= Blockly.FieldDropdown.CHECKMARK_OVERHANG;
+    return a
+};
+Blockly.FieldDropdown.prototype.onItemSelected = function(a, b) {
+    var c = b.getValue();
+    this.sourceBlock_ && (c = this.callValidator(c));
+    null !== c && this.setValue(c)
+};
+Blockly.FieldDropdown.prototype.trimOptions_ = function() {
+    this.suffixField = this.prefixField = null;
+    var a = this.menuGenerator_;
+    if (goog.isArray(a)) {
+        for (var b = !1, c = 0; c < a.length; c++) {
+            var d = a[c][0];
+            "string" == typeof d ? a[c][0] = Blockly.utils.replaceMessageReferences(d) : (null != d.alt && (a[c][0].alt = Blockly.utils.replaceMessageReferences(d.alt)), b = !0)
+        }
+        if (!(b || 2 > a.length)) {
+            b = [];
+            for (c = 0; c < a.length; c++) b.push(a[c][0]);
+            c = Blockly.utils.shortestStringLength(b);
+            d = Blockly.utils.commonWordPrefix(b, c);
+            var e = Blockly.utils.commonWordSuffix(b,
+                c);
+            !d && !e || c <= d + e || (d && (this.prefixField = b[0].substring(0, d - 1)), e && (this.suffixField = b[0].substr(1 - e)), this.menuGenerator_ = Blockly.FieldDropdown.applyTrim_(a, d, e))
+        }
+    }
+};
+Blockly.FieldDropdown.applyTrim_ = function(a, b, c) {
+    for (var d = [], e = 0; e < a.length; e++) {
+        var f = a[e][0],
+            g = a[e][1];
+        f = f.substring(b, f.length - c);
+        d[e] = [f, g]
+    }
+    return d
+};
+Blockly.FieldDropdown.prototype.isOptionListDynamic = function() {
+    return goog.isFunction(this.menuGenerator_)
+};
+Blockly.FieldDropdown.prototype.getOptions = function() {
+    if (goog.isFunction(this.menuGenerator_)) {
+        var a = this.menuGenerator_.call(this);
+        Blockly.FieldDropdown.validateOptions_(a);
+        return a
+    }
+    return this.menuGenerator_
+};
+Blockly.FieldDropdown.prototype.getValue = function() {
+    return this.value_
+};
+Blockly.FieldDropdown.prototype.setValue = function(a) {
+    if (null !== a && a !== this.value_) {
+        this.sourceBlock_ && Blockly.Events.isEnabled() && Blockly.Events.fire(new Blockly.Events.BlockChange(this.sourceBlock_, "field", this.name, this.value_, a));
+        this.value_ = a;
+        for (var b = this.getOptions(), c = 0; c < b.length; c++)
+            if (b[c][1] == a) {
+                a = b[c][0];
+                "object" == typeof a ? (this.imageJson_ = a, this.text_ = a.alt) : (this.imageJson_ = null, this.text_ = a);
+                this.forceRerender();
+                return
+            } this.text_ = a;
+        this.forceRerender()
+    }
+};
+Blockly.FieldDropdown.prototype.render_ = function() {
+    this.visible_ ? (this.sourceBlock_ && this.arrow_ && (this.arrow_.style.fill = this.sourceBlock_.getColour()), goog.dom.removeChildren(this.textElement_), goog.dom.removeNode(this.imageElement_), this.imageElement_ = null, this.imageJson_ ? this.renderSelectedImage_() : this.renderSelectedText_(), this.borderRect_.setAttribute("height", this.size_.height - 9), this.borderRect_.setAttribute("width", this.size_.width + Blockly.BlockSvg.SEP_SPACE_X)) : this.size_.width = 0
+};
+Blockly.FieldDropdown.prototype.renderSelectedImage_ = function() {
+    this.imageElement_ = Blockly.utils.createSvgElement("image", {
+        y: 5,
+        height: this.imageJson_.height + "px",
+        width: this.imageJson_.width + "px"
+    }, this.fieldGroup_);
+    this.imageElement_.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", this.imageJson_.src);
+    this.textElement_.appendChild(this.arrow_);
+    var a = Blockly.Field.getCachedWidth(this.arrow_);
+    this.size_.height = Number(this.imageJson_.height) + 19;
+    this.size_.width = Number(this.imageJson_.width) +
+        a;
+    this.sourceBlock_.RTL ? (this.imageElement_.setAttribute("x", a), this.textElement_.setAttribute("x", -1)) : (this.textElement_.setAttribute("text-anchor", "end"), this.textElement_.setAttribute("x", this.size_.width + 1))
+};
+Blockly.FieldDropdown.prototype.renderSelectedText_ = function() {
+    var a = document.createTextNode(this.getDisplayText_());
+    this.textElement_.appendChild(a);
+    this.sourceBlock_.RTL ? this.textElement_.insertBefore(this.arrow_, this.textElement_.firstChild) : this.textElement_.appendChild(this.arrow_);
+    this.textElement_.setAttribute("text-anchor", "start");
+    this.textElement_.setAttribute("x", 0);
+    this.size_.height = Blockly.BlockSvg.MIN_BLOCK_Y;
+    this.size_.width = Blockly.Field.getCachedWidth(this.textElement_)
+};
+Blockly.FieldDropdown.prototype.updateWidth = function() {
+    if (this.imageJson_ && (goog.userAgent.IE || goog.userAgent.EDGE)) {
+        var a = Blockly.Field.getCachedWidth(this.arrow_);
+        a = Number(this.imageJson_.width) + a + Blockly.BlockSvg.SEP_SPACE_X;
+        this.borderRect_ && this.borderRect_.setAttribute("width", a);
+        this.size_.width = a
+    } else Blockly.Field.prototype.updateWidth.call(this)
+};
+Blockly.FieldDropdown.prototype.dispose = function() {
+    Blockly.WidgetDiv.hideIfOwner(this);
+    Blockly.FieldDropdown.superClass_.dispose.call(this)
+};
+Blockly.FieldDropdown.validateOptions_ = function(a) {
+    if (!goog.isArray(a)) throw "FieldDropdown options must be an array.";
+    for (var b = !1, c = 0; c < a.length; ++c) {
+        var d = a[c];
+        goog.isArray(a) ? goog.isString(d[1]) ? goog.isString(d[0]) || goog.isString(d[0].src) || (b = !0, console.error("Invalid option[" + c + "]: Each FieldDropdown option must have a string label or image description. Found" + d[0] + " in: ", d)) : (b = !0, console.error("Invalid option[" + c + "]: Each FieldDropdown option id must be a string. Found " + d[1] + " in: ", d)) :
+            (b = !0, console.error("Invalid option[" + c + "]: Each FieldDropdown option must be an array. Found: ", d))
+    }
+    if (b) throw "Found invalid FieldDropdown options.";
+};
+Blockly.Field.register("field_dropdown", Blockly.FieldDropdown);
+
+Blockly.FieldImage = function(a, b, c, d, e, f) {
+    this.sourceBlock_ = null;
+    this.height_ = Number(c);
+    this.width_ = Number(b);
+    this.size_ = new goog.math.Size(this.width_, this.height_ + 2 * Blockly.BlockSvg.INLINE_PADDING_Y);
+    this.text_ = d || "";
+    this.setValue(a);
+    "function" == typeof e && (this.clickHandler_ = e);
+    this.clickImage_ = !1;
+    "undefined" != typeof f && (this.clickImage_ = f)
+};
+goog.inherits(Blockly.FieldImage, Blockly.Field);
 Blockly.FieldImage.fromJson=function(a){var b=Blockly.utils.replaceMessageReferences(a.src),c=Number(Blockly.utils.replaceMessageReferences(a.width)),d=Number(Blockly.utils.replaceMessageReferences(a.height));a=Blockly.utils.replaceMessageReferences(a.alt);return new Blockly.FieldImage(b,c,d,a)};Blockly.FieldImage.prototype.EDITABLE=!1;
-Blockly.FieldImage.prototype.init=function(){this.fieldGroup_||(this.fieldGroup_=Blockly.utils.createSvgElement("g",{},null),this.visible_||(this.fieldGroup_.style.display="none"),this.clickImage_&&(Blockly.utils.addClass(this.fieldGroup_,"blocklyIconGroup"),Blockly.utils.addClass(this.fieldGroup_,"blocklyIconFading"),Blockly.FieldImage.prototype.EDITABLE=!0),this.imageElement_=Blockly.utils.createSvgElement("image",{height:this.height_+"px",width:this.width_+"px"},this.fieldGroup_),this.setValue(this.src_),
+Blockly.FieldImage.prototype.init=function(){this.fieldGroup_||(this.fieldGroup_=Blockly.utils.createSvgElement("g",{},null),this.visible_||(this.fieldGroup_.style.display="none"),this.clickImage_&&(Blockly.utils.addClass(this.fieldGroup_,"clickableIcon"),/*Blockly.utils.addClass(this.fieldGroup_,"blocklyIconGroup"),Blockly.utils.addClass(this.fieldGroup_,"blocklyIconFading"),*/Blockly.FieldImage.prototype.EDITABLE=!0),this.imageElement_=Blockly.utils.createSvgElement("image",{height:this.height_+"px",width:this.width_+"px"},this.fieldGroup_),this.setValue(this.src_),
 this.sourceBlock_.getSvgRoot().appendChild(this.fieldGroup_),this.setTooltip(this.sourceBlock_),Blockly.Tooltip.bindMouseEvents(this.imageElement_),this.maybeAddClickHandler_())};Blockly.FieldImage.prototype.dispose=function(){goog.dom.removeNode(this.fieldGroup_);this.imageElement_=this.fieldGroup_=null};Blockly.FieldImage.prototype.maybeAddClickHandler_=function(){this.clickHandler_&&(this.mouseDownWrapper_=Blockly.bindEventWithChecks_(this.fieldGroup_,"mousedown",this,this.onMouseDown_))};
 Blockly.FieldImage.prototype.setTooltip=function(a){this.imageElement_.tooltip=a};Blockly.FieldImage.prototype.getValue=function(){return this.src_};Blockly.FieldImage.prototype.setValue=function(a){null!==a&&(this.src_=a,this.imageElement_&&this.imageElement_.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href",a||""))};Blockly.FieldImage.prototype.setText=function(a){null!==a&&(this.text_=a)};Blockly.FieldImage.prototype.render_=function(){};Blockly.FieldImage.prototype.forceRerender=function(){};
 Blockly.FieldImage.prototype.updateWidth=function(){};Blockly.FieldImage.prototype.showEditor_=function(){this.clickHandler_&&this.clickHandler_(this)};Blockly.Field.register("field_image",Blockly.FieldImage);Blockly.FieldNumber=function(a,b,c,d,e){a=a&&!isNaN(a)?String(a):"0";Blockly.FieldNumber.superClass_.constructor.call(this,a,e);this.setConstraints(b,c,d)};goog.inherits(Blockly.FieldNumber,Blockly.FieldTextInput);Blockly.FieldNumber.fromJson=function(a){return new Blockly.FieldNumber(a.value,a.min,a.max,a.precision)};
 Blockly.FieldNumber.prototype.setConstraints=function(a,b,c){c=parseFloat(c);this.precision_=isNaN(c)?0:c;a=parseFloat(a);this.min_=isNaN(a)?-Infinity:a;b=parseFloat(b);this.max_=isNaN(b)?Infinity:b;this.setValue(this.callValidator(this.getValue()))};
-Blockly.FieldNumber.prototype.classValidator=function(a){if(null===a)return null;a=String(a);a=a.replace(/O/ig,"0");a=a.replace(/,/g,"");a=parseFloat(a||0);if(isNaN(a))return null;this.precision_&&isFinite(a)&&(a=(Math.round(a/this.precision_)*this.precision_).toFixed(-1==String(this.precision_).indexOf(".")?0:String(this.precision_).split(".")[1].length));a=goog.math.clamp(a,this.min_,this.max_);return String(a)};Blockly.Field.register("field_number",Blockly.FieldNumber);Blockly.FieldVariable=function(a,b,c,d){this.menuGenerator_=Blockly.FieldVariable.dropdownCreate;this.size_=new goog.math.Size(0,Blockly.BlockSvg.MIN_BLOCK_Y);this.setValidator(b);this.defaultVariableName=a||"";this.setTypes_(c,d);this.value_=null};goog.inherits(Blockly.FieldVariable,Blockly.FieldDropdown);Blockly.FieldVariable.fromJson=function(a){var b=Blockly.utils.replaceMessageReferences(a.variable);return new Blockly.FieldVariable(b,null,a.variableTypes,a.defaultType)};
-Blockly.FieldVariable.prototype.init=function(){this.fieldGroup_||(Blockly.FieldVariable.superClass_.init.call(this),this.initModel())};Blockly.FieldVariable.prototype.initModel=function(){if(!this.variable_){this.workspace_=this.sourceBlock_.workspace;var a=Blockly.Variables.getOrCreateVariablePackage(this.workspace_,null,this.defaultVariableName,this.defaultType_);Blockly.Events.disable();try{this.setValue(a.getId())}finally{Blockly.Events.enable()}}};
-Blockly.FieldVariable.prototype.dispose=function(){Blockly.FieldVariable.superClass_.dispose.call(this);this.variableMap_=this.workspace_=null};Blockly.FieldVariable.prototype.setSourceBlock=function(a){goog.asserts.assert(!a.isShadow(),"Variable fields are not allowed to exist on shadow blocks.");Blockly.FieldVariable.superClass_.setSourceBlock.call(this,a)};Blockly.FieldVariable.prototype.getValue=function(){return this.variable_?this.variable_.getId():null};
-Blockly.FieldVariable.prototype.getText=function(){return this.variable_?this.variable_.name:""};Blockly.FieldVariable.prototype.getVariable=function(){return this.variable_};
-Blockly.FieldVariable.prototype.setValue=function(a){var b=Blockly.Variables.getVariable(this.sourceBlock_.workspace,a);if(!b)throw Error("Variable id doesn't point to a real variable!  ID was "+a);var c=b.type;if(!this.typeIsAllowed_(c))throw Error("Variable type doesn't match this field!  Type was "+c);this.sourceBlock_&&Blockly.Events.isEnabled()&&(c=this.variable_?this.variable_.getId():null,Blockly.Events.fire(new Blockly.Events.BlockChange(this.sourceBlock_,"field",this.name,c,a)));this.variable_=
-b;this.value_=a;this.setText(b.name)};Blockly.FieldVariable.prototype.typeIsAllowed_=function(a){var b=this.getVariableTypes_();if(!b)return!0;for(var c=0;c<b.length;c++)if(a==b[c])return!0;return!1};Blockly.FieldVariable.prototype.getVariableTypes_=function(){var a=this.variableTypes;if(null===a&&this.sourceBlock_)return this.sourceBlock_.workspace.getVariableTypes();a=a||[""];if(0==a.length)throw a=this.getText(),Error("'variableTypes' of field variable "+a+" was an empty list");return a};
-Blockly.FieldVariable.prototype.setTypes_=function(a,b){var c=b||"";if(null==a||void 0==a)var d=null;else if(Array.isArray(a)){d=a;for(var e=!1,f=0;f<d.length;f++)d[f]==c&&(e=!0);if(!e)throw Error("Invalid default type '"+c+"' in the definition of a FieldVariable");}else throw Error("'variableTypes' was not an array in the definition of a FieldVariable");this.defaultType_=c;this.variableTypes=d};
-Blockly.FieldVariable.dropdownCreate=function(){if(!this.variable_)throw Error("Tried to call dropdownCreate on a variable field with no variable selected.");var a=this.getText(),b=null;this.sourceBlock_&&(b=this.sourceBlock_.workspace);var c=[];if(b)for(var d=this.getVariableTypes_(),e=0;e<d.length;e++){var f=b.getVariablesOfType(d[e]);c=c.concat(f)}c.sort(Blockly.VariableModel.compareByName);b=[];for(e=0;e<c.length;e++)b[e]=[c[e].name,c[e].getId()];b.push([Blockly.Msg.RENAME_VARIABLE,Blockly.RENAME_VARIABLE_ID]);
-Blockly.Msg.DELETE_VARIABLE&&b.push([Blockly.Msg.DELETE_VARIABLE.replace("%1",a),Blockly.DELETE_VARIABLE_ID]);return b};Blockly.FieldVariable.prototype.onItemSelected=function(a,b){var c=b.getValue();if(this.sourceBlock_&&this.sourceBlock_.workspace){var d=this.sourceBlock_.workspace;if(c==Blockly.RENAME_VARIABLE_ID){Blockly.Variables.renameVariable(d,this.variable_);return}if(c==Blockly.DELETE_VARIABLE_ID){d.deleteVariableById(this.variable_.getId());return}}this.setValue(c)};
-Blockly.FieldVariable.prototype.referencesVariables=function(){return!0};Blockly.Field.register("field_variable",Blockly.FieldVariable);Blockly.Generator=function(a){this.name_=a;this.FUNCTION_NAME_PLACEHOLDER_REGEXP_=new RegExp(this.FUNCTION_NAME_PLACEHOLDER_,"g")};Blockly.Generator.NAME_TYPE="generated_function";Blockly.Generator.prototype.INFINITE_LOOP_TRAP=null;Blockly.Generator.prototype.STATEMENT_PREFIX=null;Blockly.Generator.prototype.INDENT="  ";Blockly.Generator.prototype.COMMENT_WRAP=60;Blockly.Generator.prototype.ORDER_OVERRIDES=[];
+Blockly.FieldNumber.prototype.classValidator=function(a){if(null===a)return null;a=String(a);a=a.replace(/O/ig,"0");a=a.replace(/,/g,"");a=parseFloat(a||0);if(isNaN(a))return null;this.precision_&&isFinite(a)&&(a=(Math.round(a/this.precision_)*this.precision_).toFixed(-1==String(this.precision_).indexOf(".")?0:String(this.precision_).split(".")[1].length));a=goog.math.clamp(a,this.min_,this.max_);return String(a)};Blockly.Field.register("field_number",Blockly.FieldNumber);
+
+Blockly.PluginFieldVariable = function(varname, opt_validator, opt_variableTypes,opt_defaultType,custom_Workspace){
+    this.menuGenerator_ = Blockly.PluginFieldVariable.dropdownCreate;
+    this.size_ = new goog.math.Size(0, Blockly.BlockSvg.MIN_BLOCK_Y);
+    this.setValidator(opt_validator);
+    this.defaultVariableName = varname || "";
+    this.setTypes_(opt_variableTypes, opt_defaultType);
+    this.value_ = null;
+    if(custom_Workspace){
+    	this.pluginWorkspace_ = custom_Workspace;
+    }
+
+};
+
+goog.inherits(Blockly.PluginFieldVariable, Blockly.FieldDropdown);
+
+Blockly.PluginFieldVariable.fromJson = function(options)
+{
+	var varname = Blockly.utils.replaceMessageReferences(options['variable']);
+ 	var variableTypes = options['variableTypes'];
+ 	var defaultType = options['defaultType'];
+ 	return new Blockly.PluginFieldVariable(varname, null, variableTypes, defaultType);
+} 
+
+Blockly.PluginFieldVariable.prototype.init = function() {
+  this.fieldGroup_ || (Blockly.PluginFieldVariable.superClass_.init.call(this), this.initModel())
+};
+
+Blockly.PluginFieldVariable.prototype.initModel = function() {
+  if (this.variable_) { return; }
+  var variable = Blockly.Variables.getOrCreateVariablePackage(this.pluginWorkspace_, null, this.defaultVariableName, this.defaultType_);
+  Blockly.Events.disable();
+  try {
+    this.setValue(variable.getId());
+  } finally {
+    Blockly.Events.enable();
+  }
+};
+
+Blockly.PluginFieldVariable.prototype.dispose = function() {
+    Blockly.FieldVariable.superClass_.dispose.call(this);
+    this.variableMap_ = this.workspace_ = null
+};
+
+Blockly.PluginFieldVariable.prototype.setSourceBlock = function(block) {
+  goog.asserts.assert(!block.isShadow(),
+      'Variable fields are not allowed to exist on shadow blocks.');
+  Blockly.PluginFieldVariable.superClass_.setSourceBlock.call(this, block);
+};
+
+Blockly.PluginFieldVariable.prototype.getValue = function() {
+    return this.variable_ ? this.variable_.getId() : null
+};
+
+Blockly.PluginFieldVariable.prototype.getText = function() {
+    return this.variable_ ? this.variable_.name : ""
+};
+
+Blockly.PluginFieldVariable.prototype.getVariable = function() {
+    return this.variable_
+};
+
+Blockly.PluginFieldVariable.prototype.setValue = function(id) {
+  var variable = Blockly.Variables.getVariable(this.pluginWorkspace_, id);
+
+  if (!variable) {
+  	throw new Error('Variable id doesn\'t point to a real variable!  ID was ' + id);
+  }
+  // Type checks!
+  var type = variable.type;
+  if (!this.typeIsAllowed_(type)) {
+    throw new Error('Variable type doesn\'t match this field!  Type was ' + type);
+  }
+  if (this.sourceBlock_ && Blockly.Events.isEnabled()) {
+    var oldValue = this.variable_ ? this.variable_.getId() : null;
+    Blockly.Events.fire(new Blockly.Events.BlockChange(this.sourceBlock_, 'field', this.name, oldValue, id));
+  }
+  this.variable_ = variable;
+  this.value_ = id;
+  this.setText(variable.name);
+};
+
+Blockly.PluginFieldVariable.prototype.typeIsAllowed_ = function(a) {
+    var b = this.getVariableTypes_();
+    if (!b) return !0;
+    for (var c = 0; c < b.length; c++)
+        if (a == b[c]) return !0;
+    return !1
+};
+
+Blockly.PluginFieldVariable.prototype.getVariableTypes_ = function() {
+    var a = this.variableTypes;
+    if (null === a && this.sourceBlock_) return this.sourceBlock_.workspace.getVariableTypes();
+    a = a || [""];
+    if (0 == a.length) throw a = this.getText(), Error("'variableTypes' of field variable " + a + " was an empty list");
+    return a
+};
+Blockly.PluginFieldVariable.prototype.setTypes_ = function(a, b) {
+    var c = b || "";
+    if (null == a || void 0 == a) var d = null;
+    else if (Array.isArray(a)) {
+        d = a;
+        for (var e = !1, f = 0; f < d.length; f++) d[f] == c && (e = !0);
+        if (!e) throw Error("Invalid default type '" + c + "' in the definition of a FieldVariable");
+    } else throw Error("'variableTypes' was not an array in the definition of a FieldVariable");
+    this.defaultType_ = c;
+    this.variableTypes = d
+};
+
+Blockly.PluginFieldVariable.dropdownCreate = function() {
+  if (!this.variable_) {
+    throw new Error('Tried to call dropdownCreate on a variable field with no variable selected.');
+  }
+  var name = this.getText();
+  var workspace = null;
+  if (this.sourceBlock_) {
+    workspace = this.pluginWorkspace_;
+  }
+  var variableModelList = [];
+  if (workspace) {
+    var variableTypes = this.getVariableTypes_();
+    // Get a copy of the list, so that adding rename and new variable options
+    // doesn't modify the workspace's list.
+    for (var i = 0; i < variableTypes.length; i++) {
+      var variableType = variableTypes[i];
+      var variables = workspace.getVariablesOfType(variableType);
+      variableModelList = variableModelList.concat(variables);
+    }
+  }
+  variableModelList.sort(Blockly.VariableModel.compareByName);
+
+  var options = [];
+  for (var i = 0; i < variableModelList.length; i++) {
+    // Set the UUID as the internal representation of the variable.
+    options[i] = [variableModelList[i].name, variableModelList[i].getId()];
+  }
+  // pxtblockly: add a new variable dropdown option
+  var selectedValueType = workspace.getVariableById(this.getValue()).type;
+  
+  options.push([selectedValueType ?
+    Blockly.Msg.NEW_VARIABLE_TYPE_DROPDOWN.replace('%1', selectedValueType) :
+    Blockly.Msg.NEW_VARIABLE_DROPDOWN, Blockly.CREATE_VARIABLE_ID]);
+  // pxtblockly: add a separator
+  //options.push([undefined, 'SEPARATOR']);
+  options.push([Blockly.Msg.RENAME_VARIABLE, Blockly.RENAME_VARIABLE_ID]);
+  if (Blockly.Msg.DELETE_VARIABLE) {
+    options.push(
+        [
+          Blockly.Msg.DELETE_VARIABLE.replace('%1', name),
+          Blockly.DELETE_VARIABLE_ID
+        ]
+    );
+  }
+
+  return options;
+};
+
+
+Blockly.PluginFieldVariable.prototype.onItemSelected = function(menu, menuItem) {
+  var id = menuItem.getValue();
+  if (this.sourceBlock_ && this.sourceBlock_.workspace) {
+    var workspace = this.pluginWorkspace_;
+    //var workspace2 = this.sourceBlock_.workspace;
+
+    if (id == Blockly.RENAME_VARIABLE_ID) {
+      // Rename variable.
+      Blockly.Variables.renameVariable(workspace, this.variable_);
+      return;
+    } else if (id == Blockly.DELETE_VARIABLE_ID) {
+      // Delete variable.
+      workspace.deleteVariableById(this.variable_.getId());
+      //workspace2.deleteVariableById(this.variable_.getId());
+      return;
+    } else if (id == Blockly.CREATE_VARIABLE_ID) {
+      // Create a variable.
+      var that = this;
+      var selectedValueType = workspace.getVariableById(this.getValue()).type;
+      Blockly.Variables.createVariableButtonHandler(workspace, function(text) {
+        var variable = workspace.getVariable(text, selectedValueType);
+        that.setValue(variable.getId());
+      }, selectedValueType);
+      return;
+    }
+
+    // TODO (blockly #1529): Call any validation function, and allow it to override.
+  }
+  this.setValue(id);
+};
+
+Blockly.PluginFieldVariable.prototype.referencesVariables = function() {
+    return !0
+};
+Blockly.Field.register("plugin_field_variable", Blockly.PluginFieldVariable);
+
+
+
+Blockly.FieldVariable = function(varname, opt_validator, opt_variableTypes,opt_defaultType){
+    this.menuGenerator_ = Blockly.FieldVariable.dropdownCreate;
+    this.size_ = new goog.math.Size(0, Blockly.BlockSvg.MIN_BLOCK_Y);
+    this.setValidator(opt_validator);
+    this.defaultVariableName = varname || "";
+    this.setTypes_(opt_variableTypes, opt_defaultType);
+    this.value_ = null;
+};
+goog.inherits(Blockly.FieldVariable, Blockly.FieldDropdown);
+Blockly.FieldVariable.fromJson = function(a) {
+    var b = Blockly.utils.replaceMessageReferences(a.variable);
+    return new Blockly.FieldVariable(b, null, a.variableTypes, a.defaultType)
+};
+Blockly.FieldVariable.prototype.init = function() {
+    this.fieldGroup_ || (Blockly.FieldVariable.superClass_.init.call(this), this.initModel())
+};
+Blockly.FieldVariable.prototype.initModel = function() {
+    if (!this.variable_) {
+    	this.workspace_ = this.sourceBlock_.workspace;
+        var a = Blockly.Variables.getOrCreateVariablePackage(this.workspace_, null, this.defaultVariableName, this.defaultType_);
+        Blockly.Events.disable();
+        try {
+            this.setValue(a.getId())
+        } finally {
+            Blockly.Events.enable()
+        }
+    }
+};
+
+Blockly.FieldVariable.prototype.dispose = function() {
+    Blockly.FieldVariable.superClass_.dispose.call(this);
+    this.variableMap_ = this.workspace_ = null
+};
+Blockly.FieldVariable.prototype.setSourceBlock = function(a) {
+    goog.asserts.assert(!a.isShadow(), "Variable fields are not allowed to exist on shadow blocks.");
+    Blockly.FieldVariable.superClass_.setSourceBlock.call(this, a)
+};
+Blockly.FieldVariable.prototype.getValue = function() {
+    return this.variable_ ? this.variable_.getId() : null
+};
+Blockly.FieldVariable.prototype.getText = function() {
+    return this.variable_ ? this.variable_.name : ""
+};
+Blockly.FieldVariable.prototype.getVariable = function() {
+    return this.variable_
+};
+
+Blockly.FieldVariable.prototype.setValue = function(id) {
+  var workspace = this.sourceBlock_.workspace;
+  var variable = Blockly.Variables.getVariable(workspace, id);
+
+  if (!variable) {
+    throw new Error('Variable id doesn\'t point to a real variable!  ID was ' +
+        id);
+  }
+  // Type checks!
+  var type = variable.type;
+  if (!this.typeIsAllowed_(type)) {
+    throw new Error('Variable type doesn\'t match this field!  Type was ' +
+        type);
+  }
+  if (this.sourceBlock_ && Blockly.Events.isEnabled()) {
+    var oldValue = this.variable_ ? this.variable_.getId() : null;
+    Blockly.Events.fire(new Blockly.Events.BlockChange(
+        this.sourceBlock_, 'field', this.name, oldValue, id));
+  }
+  this.variable_ = variable;
+  this.value_ = id;
+  this.setText(variable.name);
+};
+
+Blockly.FieldVariable.prototype.typeIsAllowed_ = function(a) {
+    var b = this.getVariableTypes_();
+    if (!b) return !0;
+    for (var c = 0; c < b.length; c++)
+        if (a == b[c]) return !0;
+    return !1
+};
+Blockly.FieldVariable.prototype.getVariableTypes_ = function() {
+    var a = this.variableTypes;
+    if (null === a && this.sourceBlock_) return this.sourceBlock_.workspace.getVariableTypes();
+    a = a || [""];
+    if (0 == a.length) throw a = this.getText(), Error("'variableTypes' of field variable " + a + " was an empty list");
+    return a
+};
+Blockly.FieldVariable.prototype.setTypes_ = function(a, b) {
+    var c = b || "";
+    if (null == a || void 0 == a) var d = null;
+    else if (Array.isArray(a)) {
+        d = a;
+        for (var e = !1, f = 0; f < d.length; f++) d[f] == c && (e = !0);
+        if (!e) throw Error("Invalid default type '" + c + "' in the definition of a FieldVariable");
+    } else throw Error("'variableTypes' was not an array in the definition of a FieldVariable");
+    this.defaultType_ = c;
+    this.variableTypes = d
+};
+Blockly.FieldVariable.dropdownCreate = function() {
+  if (!this.variable_) {
+    throw new Error('Tried to call dropdownCreate on a variable field with no variable selected.');
+  }
+  var name = this.getText();
+  var workspace = null;
+  if (this.sourceBlock_) {
+    workspace = this.sourceBlock_.workspace;
+  }
+  var variableModelList = [];
+  if (workspace) {
+    var variableTypes = this.getVariableTypes_();
+    // Get a copy of the list, so that adding rename and new variable options
+    // doesn't modify the workspace's list.
+    for (var i = 0; i < variableTypes.length; i++) {
+      var variableType = variableTypes[i];
+      var variables = workspace.getVariablesOfType(variableType);
+      variableModelList = variableModelList.concat(variables);
+    }
+  }
+  variableModelList.sort(Blockly.VariableModel.compareByName);
+
+  var options = [];
+  for (var i = 0; i < variableModelList.length; i++) {
+    // Set the UUID as the internal representation of the variable.
+    options[i] = [variableModelList[i].name, variableModelList[i].getId()];
+  }
+  // pxtblockly: add a new variable dropdown option
+  var selectedValueType = workspace.getVariableById(this.getValue()).type;
+  
+  options.push([selectedValueType ?
+    Blockly.Msg.NEW_VARIABLE_TYPE_DROPDOWN.replace('%1', selectedValueType) :
+    Blockly.Msg.NEW_VARIABLE_DROPDOWN, Blockly.CREATE_VARIABLE_ID]);
+  // pxtblockly: add a separator
+  //options.push([undefined, 'SEPARATOR']);
+  options.push([Blockly.Msg.RENAME_VARIABLE, Blockly.RENAME_VARIABLE_ID]);
+  if (Blockly.Msg.DELETE_VARIABLE) {
+    options.push(
+        [
+          Blockly.Msg.DELETE_VARIABLE.replace('%1', name),
+          Blockly.DELETE_VARIABLE_ID
+        ]
+    );
+  }
+
+  return options;
+};
+
+Blockly.FieldVariable.prototype.onItemSelected = function(menu, menuItem) {
+    var id = menuItem.getValue();
+  if (this.sourceBlock_ && this.sourceBlock_.workspace) {
+    //var workspace = this.pluginWorkspace_;
+    var workspace = this.sourceBlock_.workspace;
+
+    if (id == Blockly.RENAME_VARIABLE_ID) {
+      // Rename variable.
+      Blockly.Variables.renameVariable(workspace, this.variable_);
+      return;
+    } else if (id == Blockly.DELETE_VARIABLE_ID) {
+      // Delete variable.
+      workspace.deleteVariableById(this.variable_.getId());
+      //workspace2.deleteVariableById(this.variable_.getId());
+      return;
+    } else if (id == Blockly.CREATE_VARIABLE_ID) {
+      // Create a variable.
+      var that = this;
+      var selectedValueType = workspace.getVariableById(this.getValue()).type;
+      Blockly.Variables.createVariableButtonHandler(workspace, function(text) {
+        var variable = workspace.getVariable(text, selectedValueType);
+        that.setValue(variable.getId());
+      }, selectedValueType);
+      return;
+    }
+
+    // TODO (blockly #1529): Call any validation function, and allow it to override.
+  }
+  this.setValue(id);
+};
+Blockly.FieldVariable.prototype.referencesVariables = function() {
+    return !0
+};
+Blockly.Field.register("field_variable", Blockly.FieldVariable);
+Blockly.Generator = function(a) {
+    this.name_ = a;
+    this.FUNCTION_NAME_PLACEHOLDER_REGEXP_ = new RegExp(this.FUNCTION_NAME_PLACEHOLDER_, "g")
+};
+Blockly.Generator.NAME_TYPE = "generated_function";
+Blockly.Generator.prototype.INFINITE_LOOP_TRAP = null;
+Blockly.Generator.prototype.STATEMENT_PREFIX = null;
+Blockly.Generator.prototype.INDENT = "  ";
+Blockly.Generator.prototype.COMMENT_WRAP = 60;
+Blockly.Generator.prototype.ORDER_OVERRIDES = [];
+
 Blockly.Generator.prototype.workspaceToCode=function(a){a||(console.warn("No workspace specified in workspaceToCode call.  Guessing."),a=Blockly.getMainWorkspace());var b=[];this.init(a);a=a.getTopBlocks(!0);for(var c=0,d;d=a[c];c++){var e=this.blockToCode(d);goog.isArray(e)&&(e=e[0]);e&&(d.outputConnection&&(e=this.scrubNakedValue(e)),b.push(e))}b=b.join("\n");b=this.finish(b);b=b.replace(/^\s+\n/,"");b=b.replace(/\n\s+$/,"\n");return b=b.replace(/[ \t]+\n/g,"\n")};
 Blockly.Generator.prototype.prefixLines=function(a,b){return b+a.replace(/(?!\n$)\n/g,"\n"+b)};Blockly.Generator.prototype.allNestedComments=function(a){var b=[];a=a.getDescendants(!0);for(var c=0;c<a.length;c++){var d=a[c].getCommentText();d&&b.push(d)}b.length&&b.push("");return b.join("\n")};
 Blockly.Generator.prototype.blockToCode=function(a){if(!a)return"";if(a.disabled)return this.blockToCode(a.getNextBlock());var b=this[a.type];goog.asserts.assertFunction(b,'Language "%s" does not know how to generate code for block type "%s".',this.name_,a.type);b=b.call(a,a);if(goog.isArray(b))return goog.asserts.assert(a.outputConnection,'Expecting string from statement block "%s".',a.type),[this.scrub_(a,b[0]),b[1]];if(goog.isString(b)){var c=a.id.replace(/\$/g,"$$$$");this.STATEMENT_PREFIX&&(b=
@@ -1690,9 +2298,49 @@ Blockly.VerticalFlyout.prototype.getClientRect=function(){if(!this.svgGroup_)ret
 Blockly.VerticalFlyout.prototype.reflowInternal_=function(){this.workspace_.scale=this.targetWorkspace_.scale;for(var a=0,b=this.workspace_.getTopBlocks(!1),c=0,d;d=b[c];c++){var e=d.getHeightWidth().width;d.outputConnection&&(e-=Blockly.BlockSvg.TAB_WIDTH);a=Math.max(a,e)}for(c=0;d=this.buttons_[c];c++)a=Math.max(a,d.width);a+=1.5*this.MARGIN+Blockly.BlockSvg.TAB_WIDTH;a*=this.workspace_.scale;a+=Blockly.Scrollbar.scrollbarThickness;if(this.width_!=a){for(c=0;d=b[c];c++)this.RTL&&(e=d.getRelativeToSurfaceXY().x,
 d.moveBy(a/this.workspace_.scale-this.MARGIN-Blockly.BlockSvg.TAB_WIDTH-e,0)),d.flyoutRect_&&this.moveRectToBlock_(d.flyoutRect_,d);if(this.RTL)for(c=0;d=this.buttons_[c];c++)b=d.getPosition().y,d.moveTo(a/this.workspace_.scale-d.width-this.MARGIN-Blockly.BlockSvg.TAB_WIDTH,b);this.width_=a;this.targetWorkspace_.resize()}};Blockly.Toolbox=function(a){this.workspace_=a;this.RTL=a.options.RTL;this.horizontalLayout_=a.options.horizontalLayout;this.toolboxPosition=a.options.toolboxPosition;this.config_={indentWidth:19,cssRoot:"blocklyTreeRoot",cssHideRoot:"blocklyHidden",cssItem:"",cssTreeRow:"blocklyTreeRow",cssItemLabel:"blocklyTreeLabel",cssExpandedFolderIcon:"blocklyTreeIconOpen",cssFileIcon:"blocklyTreeIconNone",cssSelectedRow:"blocklyTreeSelected"};this.treeSeparatorConfig_={cssTreeRow:"blocklyTreeSeparator"};this.horizontalLayout_&&
 (this.config_.cssTreeRow+=a.RTL?" blocklyHorizontalTreeRtl":" blocklyHorizontalTree",this.treeSeparatorConfig_.cssTreeRow="blocklyTreeSeparatorHorizontal "+(a.RTL?"blocklyHorizontalTreeRtl":"blocklyHorizontalTree"),this.config_.cssTreeIcon="")};Blockly.Toolbox.prototype.width=0;Blockly.Toolbox.prototype.height=0;Blockly.Toolbox.prototype.selectedOption_=null;Blockly.Toolbox.prototype.lastCategory_=null;
-Blockly.Toolbox.prototype.init=function(){var a=this.workspace_,b=this.workspace_.getParentSvg();this.HtmlDiv=goog.dom.createDom("DIV","blocklyToolboxDiv");this.HtmlDiv.setAttribute("dir",a.RTL?"RTL":"LTR");b.parentNode.insertBefore(this.HtmlDiv,b);Blockly.bindEventWithChecks_(this.HtmlDiv,"mousedown",this,function(a){Blockly.utils.isRightButton(a)||a.target==this.HtmlDiv?Blockly.hideChaff(!1):Blockly.hideChaff(!0);Blockly.Touch.clearTouchIdentifier()},!1,!0);b={disabledPatternId:a.options.disabledPatternId,
-parentWorkspace:a,RTL:a.RTL,oneBasedIndex:a.options.oneBasedIndex,horizontalLayout:a.horizontalLayout,toolboxPosition:a.options.toolboxPosition};this.flyout_=null;this.flyout_=a.horizontalLayout?new Blockly.HorizontalFlyout(b):new Blockly.VerticalFlyout(b);goog.dom.insertSiblingAfter(this.flyout_.createDom("svg"),this.workspace_.getParentSvg());this.flyout_.init(a);this.config_.cleardotPath=a.options.pathToMedia+"1x1.gif";this.config_.cssCollapsedFolderIcon="blocklyTreeIconClosed"+(a.RTL?"Rtl":"Ltr");
-this.tree_=b=new Blockly.Toolbox.TreeControl(this,this.config_);b.setShowRootNode(!1);b.setShowLines(!1);b.setShowExpandIcons(!1);b.setSelectedItem(null);a=this.populate_(a.options.languageTree);b.render(this.HtmlDiv);a&&b.setSelectedItem(a);this.addColour_();this.addBackground_();this.addIcon_();this.position()};Blockly.Toolbox.prototype.dispose=function(){this.flyout_.dispose();this.tree_.dispose();goog.dom.removeNode(this.HtmlDiv);this.lastCategory_=this.workspace_=null};
+Blockly.Toolbox.prototype.init = function() {
+    var a = this.workspace_,
+        b = this.workspace_.getParentSvg();
+    this.HtmlDiv = goog.dom.createDom("DIV", "blocklyToolboxDiv");
+    this.HtmlDiv.setAttribute("dir", a.RTL ? "RTL" : "LTR");
+    b.parentNode.insertBefore(this.HtmlDiv, b);
+    Blockly.bindEventWithChecks_(this.HtmlDiv, "mousedown", this, function(a) {
+        Blockly.utils.isRightButton(a) || a.target == this.HtmlDiv ? Blockly.hideChaff(!1) : Blockly.hideChaff(!0);
+        Blockly.Touch.clearTouchIdentifier()
+    }, !1, !0);
+    b = {
+        disabledPatternId: a.options.disabledPatternId,
+        parentWorkspace: a,
+        RTL: a.RTL,
+        oneBasedIndex: a.options.oneBasedIndex,
+        horizontalLayout: a.horizontalLayout,
+        toolboxPosition: a.options.toolboxPosition
+    };
+    this.flyout_ = null;
+    this.flyout_ = a.horizontalLayout ? new Blockly.HorizontalFlyout(b) : new Blockly.VerticalFlyout(b);
+    goog.dom.insertSiblingAfter(this.flyout_.createDom("svg"), this.workspace_.getParentSvg());
+    this.flyout_.init(a);
+    this.config_.cleardotPath = a.options.pathToMedia + "1x1.gif";
+    this.config_.cssCollapsedFolderIcon = "blocklyTreeIconClosed" + (a.RTL ? "Rtl" : "Ltr");
+    this.tree_ = b = new Blockly.Toolbox.TreeControl(this, this.config_);
+    b.setShowRootNode(!1);
+    b.setShowLines(!1);
+    b.setShowExpandIcons(!1);
+    b.setSelectedItem(null);
+    a = this.populate_(a.options.languageTree);
+    b.render(this.HtmlDiv);
+    a && b.setSelectedItem(a);
+    this.addColour_();
+    this.addBackground_();
+    this.addIcon_();
+    this.position()
+};
+Blockly.Toolbox.prototype.dispose = function() {
+    this.flyout_.dispose();
+    this.tree_.dispose();
+    goog.dom.removeNode(this.HtmlDiv);
+    this.lastCategory_ = this.workspace_ = null
+};
 Blockly.Toolbox.prototype.getWidth=function(){return this.width};Blockly.Toolbox.prototype.getHeight=function(){return this.height};
 Blockly.Toolbox.prototype.position=function(){var a=this.HtmlDiv;if(a){var b=this.workspace_.getParentSvg();b=Blockly.svgSize(b);this.horizontalLayout_?(a.style.left="0",a.style.height="auto",a.style.width=b.width+"px",this.height=a.offsetHeight,this.toolboxPosition==Blockly.TOOLBOX_AT_TOP?a.style.top="0":a.style.bottom="0"):(this.toolboxPosition==Blockly.TOOLBOX_AT_RIGHT?a.style.right="0":a.style.left="0",a.style.height=b.height+"px",this.width=a.offsetWidth);this.flyout_.position()}};
 Blockly.Toolbox.prototype.populate_=function(a){this.tree_.removeChildren();this.tree_.blocks=[];this.hasColours_=!1;a=this.syncTrees_(a,this.tree_,this.workspace_.options.pathToMedia);if(this.tree_.blocks.length)throw"Toolbox cannot have both blocks and categories in the root level.";this.workspace_.resizeContents();return a};
@@ -1700,9 +2348,62 @@ Blockly.Toolbox.prototype.syncTrees_=function(a,b,c){for(var d=null,e=null,f=0,g
 h=Blockly.utils.replaceMessageReferences(g.getAttribute("colour"));null===h||""===h?l.hexColour="":/^#[0-9a-fA-F]{6}$/.test(h)?(l.hexColour=h,this.hasColours_=!0):"number"===typeof h||"string"===typeof h&&!isNaN(Number(h))?(l.hexColour=Blockly.hueToRgb(Number(h)),this.hasColours_=!0):(l.hexColour="",console.warn('Toolbox category "'+e+'" has unrecognized colour attribute: '+h));"true"==g.getAttribute("expanded")?(l.blocks.length&&(d=l),l.setExpanded(!0)):l.setExpanded(!1);e=g;break;case "SEP":e&&
 ("CATEGORY"==e.tagName.toUpperCase()?b.add(new Blockly.Toolbox.TreeSeparator(this.treeSeparatorConfig_)):(g=parseFloat(g.getAttribute("gap")),!isNaN(g)&&e&&e.setAttribute("gap",g)));break;case "BLOCK":case "SHADOW":case "LABEL":case "BUTTON":b.blocks.push(g),e=g}return d};
 Blockly.Toolbox.prototype.addColour_=function(a){a=(a||this.tree_).getChildren(!1);for(var b=0,c;c=a[b];b++){var d=c.getRowElement();if(d){if(!this.hasColours_)var e="none";this.workspace_.RTL?d.style.borderRight=e:d.style.borderLeft=e}this.addColour_(c)}};Blockly.Toolbox.prototype.addBackground_=function(a){a=(a||this.tree_).getChildren(!1);for(var b=0,c;c=a[b];b++){var d=c.bg,e=c.getRowElement();e&&(e.style.backgroundImage=null==d||void 0==d?"":"url('"+d+"')");this.addBackground_(c)}};
-Blockly.Toolbox.prototype.addIcon_=function(a){a=(a||this.tree_).getChildren(!1);for(var b=0,c;c=a[b];b++){var d=c.icon,e=c.getRowElement();if(e&&null!=d&&void 0!=d){var f=e.getElementsByClassName(" blocklyTreeLabel")[0],g=document.createElement("div");g.className="divImg";g.style.display="inline-block";g.style.paddingLeft="10px";g.style.paddingRight="10px";g.style.backgroundColor="#00324C";e.insertBefore(g,f);f=document.createElement("div");f.className="divImg1";f.style.height="50px";g=document.createElement("div");
-g.className="blocklyTreeSeparator";g.style.borderBottomColor="#14597D";var h=c.getRowElement().getElementsByClassName("divImg")[0];h.appendChild(f);h.appendChild(g);f=h.getElementsByClassName("divImg1")[0];g=document.createElement("img");g.setAttribute("src",d);g.style.width="3em";g.style.verticalAlign="middle";f.appendChild(g);d=document.createElement("div");d.style.display="inline-block";d.style.verticalAlign="top";d.style.width="68%";d.style.paddingLeft="10px";d.style.paddingRight="10px";d.className=
-"divLabel";e.appendChild(d);d=document.createElement("div");d.className="divLabel1";d.style.height="50px";f=document.createElement("div");f.className="blocklyTreeSeparator";f.style.borderBottomColor="#B8EDFA";g=c.getRowElement().getElementsByClassName("divLabel")[0];g.appendChild(d);g.appendChild(f);d=g.getElementsByClassName("divLabel1")[0];e=e.getElementsByClassName(" blocklyTreeLabel")[0];e.style.paddingLeft="7px";e.style.paddingRight="20px";d.appendChild(e)}this.addIcon_(c)}};
+Blockly.Toolbox.prototype.addIcon_ = function(a) {
+    a = (a || this.tree_).getChildren(!1);
+    for (var b = 0, c; c = a[b]; b++) {
+        var d = c.icon,
+            e = c.getRowElement();
+        if (e && null != d && void 0 != d) {
+            var f = e.getElementsByClassName(" blocklyTreeLabel")[0],
+                g = document.createElement("div");
+            g.className = "divImg";
+            g.style.display = "inline-block";
+            g.style.paddingLeft = "10px";
+            g.style.paddingRight = "10px";
+            g.style.backgroundColor = "#00324C";
+            e.insertBefore(g, f);
+            f = document.createElement("div");
+            f.className = "divImg1";
+            f.style.height = "50px";
+            g = document.createElement("div");
+            g.className = "blocklyTreeSeparator";
+            g.style.borderBottomColor = "#14597D";
+            var h = c.getRowElement().getElementsByClassName("divImg")[0];
+            h.appendChild(f);
+            h.appendChild(g);
+            f = h.getElementsByClassName("divImg1")[0];
+            g = document.createElement("img");
+            g.setAttribute("src", d);
+            g.style.width = "3em";
+            g.style.verticalAlign = "middle";
+            f.appendChild(g);
+            d = document.createElement("div");
+            d.style.display = "inline-block";
+            d.style.verticalAlign = "top";
+            d.style.width = "68%";
+            d.style.paddingLeft = "10px";
+            d.style.paddingRight = "10px";
+            d.className =
+                "divLabel";
+            e.appendChild(d);
+            d = document.createElement("div");
+            d.className = "divLabel1";
+            d.style.height = "50px";
+            f = document.createElement("div");
+            f.className = "blocklyTreeSeparator";
+            f.style.borderBottomColor = "#B8EDFA";
+            g = c.getRowElement().getElementsByClassName("divLabel")[0];
+            g.appendChild(d);
+            g.appendChild(f);
+            d = g.getElementsByClassName("divLabel1")[0];
+            e = e.getElementsByClassName(" blocklyTreeLabel")[0];
+            e.style.paddingLeft = "7px";
+            e.style.paddingRight = "20px";
+            d.appendChild(e)
+        }
+        this.addIcon_(c)
+    }
+};
 Blockly.Toolbox.prototype.clearSelection=function(){this.tree_.setSelectedItem(null)};Blockly.Toolbox.prototype.addStyle=function(a){Blockly.utils.addClass(this.HtmlDiv,a)};Blockly.Toolbox.prototype.removeStyle=function(a){Blockly.utils.removeClass(this.HtmlDiv,a)};
 Blockly.Toolbox.prototype.getClientRect=function(){if(!this.HtmlDiv)return null;var a=this.HtmlDiv.getBoundingClientRect(),b=a.left,c=a.top,d=a.width;a=a.height;return this.toolboxPosition==Blockly.TOOLBOX_AT_LEFT?new goog.math.Rect(-1E7,-1E7,1E7+b+d,2E7):this.toolboxPosition==Blockly.TOOLBOX_AT_RIGHT?new goog.math.Rect(b,-1E7,1E7+d,2E7):this.toolboxPosition==Blockly.TOOLBOX_AT_TOP?new goog.math.Rect(-1E7,-1E7,2E7,1E7+c+a):new goog.math.Rect(0,c,2E7,1E7+d)};
 Blockly.Toolbox.prototype.refreshSelection=function(){var a=this.tree_.getSelectedItem();a&&a.blocks&&this.flyout_.show(a.blocks)};Blockly.Toolbox.TreeControl=function(a,b){this.toolbox_=a;goog.ui.tree.TreeControl.call(this,goog.html.SafeHtml.EMPTY,b)};goog.inherits(Blockly.Toolbox.TreeControl,goog.ui.tree.TreeControl);
@@ -1722,7 +2423,7 @@ Blockly.Css.CONTENT=[".blocklySvg {","background-color: #fff;","outline: none;",
 "}",".blocklyDisabled>.blocklyPath {","fill-opacity: .5;","stroke-opacity: .5;","}",".blocklyDisabled>.blocklyPathLight,",".blocklyDisabled>.blocklyPathDark {","display: none;","}",".blocklyText {","cursor: default;","fill: #fff;","font-family: sans-serif;","font-size: 11pt;","}",".blocklyNonEditableText>text {","pointer-events: none;","}",".blocklyNonEditableText>rect,",".blocklyEditableText>rect {","fill: #fff;","fill-opacity: .6;","}",".blocklyNonEditableText>text,",".blocklyEditableText>text {",
 "fill: #000;","}",".blocklyEditableText:hover>rect {","stroke: #fff;","stroke-width: 2;","}",".blocklyBubbleText {","fill: #000;","}",".blocklyFlyout {","position: absolute;","z-index: 20;","}",".blocklyFlyoutButton {","fill: #888;","cursor: default;","}",".blocklyFlyoutButtonShadow {","fill: #666;","}",".blocklyFlyoutButton:hover {","fill: #aaa;","}",".blocklyFlyoutLabel {","cursor: default;","}",".blocklyFlyoutLabelBackground {","opacity: 0;","}",".blocklyFlyoutLabelText {","fill: #000;","}",".blocklySvg text, .blocklyBlockDragSurface text {",
 "user-select: none;","-moz-user-select: none;","-ms-user-select: none;","-webkit-user-select: none;","cursor: inherit;","}",".blocklyHidden {","display: none;","}",".blocklyFieldDropdown:not(.blocklyHidden) {","display: block;","}",".blocklyIconGroup {","cursor: default;","}",".blocklyIconGroup:not(:hover),",".blocklyIconGroupReadonly {","opacity: .6;","}",".blocklyDraggable:not(:hover) .blocklyIconFading {","  opacity: 0;","}",".blocklyFlyout .blocklyDraggable:not(:hover) .blocklyIconFading {","  opacity: 1;",
-"}",".blocklyCheckedBox {","fill: #f00 !important;","fill-opacity: 1 !important;","}",".blocklyIconShape {","fill: #00f;","stroke: #fff;","stroke-width: 1px;","}",".blocklyIconSymbol {","fill: #fff;","}",".blocklyMinimalBody {","margin: 0;","padding: 0;","}",".blocklyCommentForeignObject {","position: relative;","z-index: 0;","}",".blocklyCommentRect {","fill: #E7DE8E;","stroke: #bcA903;","stroke-width: 1px","}",".blocklyCommentTarget {","fill: transparent;","stroke: #bcA903;","}",".blocklyCommentTargetFocused {",
+"}",".blocklyCheckedBox {","fill: #f00 !important;","fill-opacity: 1 !important;","}",".blocklyIconShape {","fill: #00f;","stroke: #fff;","stroke-width: 1px;","}",".blocklyIconSymbol {","fill: #fff;","}",".clickableIcon {","cursor: pointer;","}",".blocklyMinimalBody {","margin: 0;","padding: 0;","}",".blocklyCommentForeignObject {","position: relative;","z-index: 0;","}",".blocklyCommentRect {","fill: #E7DE8E;","stroke: #bcA903;","stroke-width: 1px","}",".blocklyCommentTarget {","fill: transparent;","stroke: #bcA903;","}",".blocklyCommentTargetFocused {",
 "fill: none;","}",".blocklyCommentHandleTarget {","fill: none;","}",".blocklyCommentHandleTargetFocused {","fill: transparent;","}",".blocklyFocused>.blocklyCommentRect {","fill: #B9B272;","stroke: #B9B272;","}",".blocklySelected>.blocklyCommentTarget {","stroke: #fc3;","stroke-width: 3px;","}",".blocklyCommentTextarea {","background-color: #fef49c;","border: 0;","outline: 0;","margin: 0;","padding: 3px;","resize: none;","display: block;","overflow: hidden;","}",".blocklyCommentDeleteIcon {","cursor: pointer;",
 "fill: #000;","display: none","}",".blocklySelected > .blocklyCommentDeleteIcon {","display: block","}",".blocklyDeleteIconShape {","fill: #000;","stroke: #000;","stroke-width: 1px;","}",".blocklyDeleteIconShape.blocklyDeleteIconHighlighted {","stroke: #fc3;","}",".blocklyHtmlInput {","border: none;","border-radius: 4px;","font-family: sans-serif;","height: 100%;","margin: 0;","outline: none;","padding: 0 1px;","width: 100%","}",".blocklyMainBackground {","stroke-width: 1;","stroke: #c6c6c6;","}",
 ".blocklyMutatorBackground {","fill: #fff;","stroke: #ddd;","stroke-width: 1;","}",".blocklyFlyoutBackground {","fill: #ddd;","fill-opacity: .8;","}",".blocklyTransparentBackground {","opacity: 0;","}",".blocklyMainWorkspaceScrollbar {","z-index: 20;","}",".blocklyFlyoutScrollbar {","z-index: 30;","}",".blocklyScrollbarHorizontal, .blocklyScrollbarVertical {","position: absolute;","outline: none;","}",".blocklyScrollbarBackground {","opacity: 0;","}",".blocklyScrollbarHandle {","fill: #ccc;","}",
@@ -1756,9 +2457,81 @@ Blockly.inject.bindDocumentEvents_=function(){Blockly.documentEventsBound_||(Blo
 Blockly.inject.loadSounds_=function(a,b){var c=b.getAudioManager();c.load([a+"click.mp3",a+"click.wav",a+"click.ogg"],"click");c.load([a+"disconnect.wav",a+"disconnect.mp3",a+"disconnect.ogg"],"disconnect");c.load([a+"delete.mp3",a+"delete.ogg",a+"delete.wav"],"delete");var d=[],e=function(){for(;d.length;)Blockly.unbindEvent_(d.pop());c.preload()};d.push(Blockly.bindEventWithChecks_(document,"mousemove",null,e,!0));d.push(Blockly.bindEventWithChecks_(document,"touchstart",null,e,!0))};
 Blockly.updateToolbox=function(a){console.warn("Deprecated call to Blockly.updateToolbox, use workspace.updateToolbox instead.");Blockly.getMainWorkspace().updateToolbox(a)};var CLOSURE_DEFINES={"goog.DEBUG":!1};Blockly.mainWorkspace=null;Blockly.selected=null;Blockly.draggingConnections_=[];Blockly.clipboardXml_=null;Blockly.clipboardSource_=null;Blockly.cache3dSupported_=null;Blockly.hueToRgb=function(a){return goog.color.hsvToHex(a,Blockly.HSV_SATURATION,255*Blockly.HSV_VALUE)};Blockly.svgSize=function(a){return{width:a.cachedWidth_,height:a.cachedHeight_}};Blockly.resizeSvgContents=function(a){a.resizeContents()};
 Blockly.svgResize=function(a){for(;a.options.parentWorkspace;)a=a.options.parentWorkspace;var b=a.getParentSvg(),c=b.parentNode;if(c){var d=c.offsetWidth;c=c.offsetHeight;b.cachedWidth_!=d&&(b.setAttribute("width",d+"px"),b.cachedWidth_=d);b.cachedHeight_!=c&&(b.setAttribute("height",c+"px"),b.cachedHeight_=c);a.resize()}};
-Blockly.onKeyDown_=function(a){if(!Blockly.mainWorkspace.options.readOnly&&!Blockly.utils.isTargetInput(a)){var b=!1;if(27==a.keyCode)Blockly.hideChaff();else if(8==a.keyCode||46==a.keyCode){a.preventDefault();if(Blockly.mainWorkspace.isDragging())return;Blockly.selected&&Blockly.selected.isDeletable()&&(b=!0)}else if(a.altKey||a.ctrlKey||a.metaKey){if(Blockly.mainWorkspace.isDragging())return;Blockly.selected&&Blockly.selected.isDeletable()&&Blockly.selected.isMovable()&&(67==a.keyCode?(Blockly.hideChaff(),
-Blockly.copy_(Blockly.selected)):88!=a.keyCode||Blockly.selected.workspace.isFlyout||(Blockly.copy_(Blockly.selected),b=!0));86==a.keyCode?Blockly.clipboardXml_&&(Blockly.Events.setGroup(!0),a=Blockly.clipboardSource_,a.isFlyout&&(a=a.targetWorkspace),a.paste(Blockly.clipboardXml_),Blockly.Events.setGroup(!1)):90==a.keyCode&&(Blockly.hideChaff(),Blockly.mainWorkspace.undo(a.shiftKey))}b&&!Blockly.selected.workspace.isFlyout&&(Blockly.Events.setGroup(!0),Blockly.hideChaff(),Blockly.selected.dispose(!0,
-!0),Blockly.Events.setGroup(!1))}};Blockly.copy_=function(a){if(a.isComment)var b=a.toXmlWithXY();else{b=Blockly.Xml.blockToDom(a);Blockly.Xml.deleteNext(b);var c=a.getRelativeToSurfaceXY();b.setAttribute("x",a.RTL?-c.x:c.x);b.setAttribute("y",c.y)}Blockly.clipboardXml_=b;Blockly.clipboardSource_=a.workspace};
+//remove crtl-z and ctrl-shift-z (undo and redo to use hot key on global only)
+//change ctrl-shift-z to ctrl-y to redo
+Blockly.onKeyDown_ = function(e) {
+  var workspace = Blockly.mainWorkspace;
+  if (workspace.options.readOnly || Blockly.utils.isTargetInput(e)) {
+    // No key actions on readonly workspaces.
+    // When focused on an HTML text input widget, don't trap any keys.
+    // Ignore keypresses on rendered workspaces that have been explicitly
+    // hidden.
+    return;
+  }
+  var deleteBlock = false;
+  if (e.keyCode == 27) {
+    // Pressing esc closes the context menu.
+    Blockly.hideChaff();
+  } else if (e.keyCode == 8 || e.keyCode == 46) {
+  	e.preventDefault();
+    // Don't delete while dragging.  Jeez.
+    if (Blockly.mainWorkspace.isDragging()) {
+      return;
+    }
+    if (Blockly.selected && Blockly.selected.isDeletable()) {
+      deleteBlock = true;
+    }
+  } else if (e.altKey || e.ctrlKey || e.metaKey) {
+  	if (Blockly.mainWorkspace.isDragging()) {
+      return;
+    }
+    if (Blockly.selected &&
+        Blockly.selected.isDeletable() && Blockly.selected.isMovable()) {
+      if (e.keyCode == 67) {
+        // 'c' for copy.
+        Blockly.hideChaff();
+        Blockly.copy_(Blockly.selected);
+      } else if (e.keyCode == 88 && !Blockly.selected.workspace.isFlyout) {
+        // 'x' for cut, but not in a flyout.
+        // Don't even copy the selected item in the flyout.
+        Blockly.copy_(Blockly.selected);
+        deleteBlock = true;
+      }
+    }
+    if (e.keyCode == 86) {
+      //86 == a.keyCode ? Blockly.clipboardXml_ && 
+      //(Blockly.Events.setGroup(!0), a = Blockly.clipboardSource_, a.isFlyout && (a = a.targetWorkspace), a.paste(Blockly.clipboardXml_), Blockly.Events.setGroup(!1)) : 90 == a.keyCode && (Blockly.hideChaff(), Blockly.mainWorkspace.undo(a.shiftKey))
+      // 'v' for paste.
+      if (Blockly.clipboardXml_) {
+        Blockly.Events.setGroup(true);
+        var workspace = Blockly.clipboardSource_;
+        if (workspace.isFlyout) {
+          workspace = workspace.targetWorkspace;
+        }
+        workspace.paste(Blockly.clipboardXml_);
+        Blockly.Events.setGroup(false);
+      }
+    } else if (e.keyCode == 90) {
+      // 'z' for undo 'Z' is for redo.
+      Blockly.hideChaff();
+      workspace.undo(e.shiftKey);
+    } else if (e.keyCode == 89) {
+      // 'y' for redo
+      Blockly.hideChaff();
+      workspace.undo(true);
+    }
+  }
+  // Common code for delete and cut.
+  // Don't delete in the flyout.
+
+  if (deleteBlock && !Blockly.selected.workspace.isFlyout) {
+    Blockly.Events.setGroup(true);
+    Blockly.hideChaff();
+    Blockly.selected.dispose(/* heal */ true, true);
+    Blockly.Events.setGroup(false);
+  }
+};
+Blockly.copy_=function(a){if(a.isComment)var b=a.toXmlWithXY();else{b=Blockly.Xml.blockToDom(a);Blockly.Xml.deleteNext(b);var c=a.getRelativeToSurfaceXY();b.setAttribute("x",a.RTL?-c.x:c.x);b.setAttribute("y",c.y)}Blockly.clipboardXml_=b;Blockly.clipboardSource_=a.workspace};
 Blockly.duplicate_=function(a){var b=Blockly.clipboardXml_,c=Blockly.clipboardSource_;Blockly.copy_(a);a.workspace.paste(Blockly.clipboardXml_);Blockly.clipboardXml_=b;Blockly.clipboardSource_=c};Blockly.onContextMenu_=function(a){Blockly.utils.isTargetInput(a)||a.preventDefault()};Blockly.hideChaff=function(a){Blockly.Tooltip.hide();Blockly.WidgetDiv.hide();a||(a=Blockly.getMainWorkspace(),a.toolbox_&&a.toolbox_.flyout_&&a.toolbox_.flyout_.autoClose&&a.toolbox_.clearSelection())};
 Blockly.addChangeListener=function(a){console.warn("Deprecated call to Blockly.addChangeListener, use workspace.addChangeListener instead.");return Blockly.getMainWorkspace().addChangeListener(a)};Blockly.getMainWorkspace=function(){return Blockly.mainWorkspace};Blockly.alert=function(a,b){window.alert(a);b&&b()};Blockly.confirm=function(a,b){b(window.confirm(a))};Blockly.prompt=function(a,b,c){c(window.prompt(a,b))};Blockly.jsonInitFactory_=function(a){return function(){this.jsonInit(a)}};
 Blockly.defineBlocksWithJsonArray=function(a){for(var b=0;b<a.length;b++){var c=a[b];if(c){var d=c.type;null==d||""===d?console.warn("Block definition #"+b+" in JSON array is missing a type attribute. Skipping."):(Blockly.Blocks[d]&&console.warn("Block definition #"+b+' in JSON array overwrites prior definition of "'+d+'".'),Blockly.Blocks[d]={init:Blockly.jsonInitFactory_(c)})}else console.warn("Block definition #"+b+" in JSON array is "+c+". Skipping.")}};
